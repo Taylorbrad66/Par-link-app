@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1412" />
+  <meta name="description" content="ParLink V1.2 - score, compete, track handicap, share." />
+  <title>ParLink V1.2</title>
+  <style>
+:root{
+  --bg:#08110f;
+  --panel:#0f1b18;
+  --panel2:#14231f;
+  --line:#263a34;
+  --text:#f3f7f5;
+  --muted:#a8b7b1;
+  --green:#69e49f;
+  --green2:#3abf7a;
+  --blue:#79a9ff;
+  --amber:#ffc968;
+  --red:#ff7d7d;
+  --shadow:0 14px 34px rgba(0,0,0,.28);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100%}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+#app{min-height:100vh;padding-bottom:88px}
+.shell{max-width:760px;margin:0 auto;padding:16px}
+.header{display:flex;align-items:center;justify-content:space-between;padding:10px 0 16px;position:sticky;top:0;background:linear-gradient(180deg,var(--bg) 80%,rgba(8,17,15,0));z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}.brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,var(--green),var(--green2));display:grid;place-items:center;color:#052216;font-weight:900;box-shadow:0 8px 20px rgba(58,191,122,.25)}
+.header-actions{display:flex;gap:8px}.icon-btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;padding:10px 12px}
+.hero{background:radial-gradient(circle at 20% 0%,rgba(105,228,159,.18),transparent 42%),var(--panel);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow)}
+.eyebrow{color:var(--green);font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;font-weight:800}.hero h1{font-size:2rem;line-height:1.05;margin:8px 0 10px}.hero p{margin:0;color:var(--muted);line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.card{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:var(--radius);padding:16px;text-align:left;box-shadow:0 10px 24px rgba(0,0,0,.18)}.card:hover{border-color:#3f5b52}.card .emoji{font-size:1.5rem}.card h3{margin:9px 0 4px}.card p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.35}
+.section{margin-top:22px}.section-title{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:10px}.section-title h2{font-size:1.05rem;margin:0}.section-title span{color:var(--muted);font-size:.84rem}
+.btn{border:0;border-radius:13px;padding:12px 14px;font-weight:800}.btn-primary{background:var(--green);color:#082016}.btn-secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.btn-danger{background:rgba(255,125,125,.12);color:#ffb6b6;border:1px solid rgba(255,125,125,.35)}.btn-row{display:flex;gap:10px;flex-wrap:wrap}.btn:disabled{opacity:.45;cursor:not-allowed}
+.list{display:flex;flex-direction:column;gap:10px}.list-item{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:13px}.list-item .meta{color:var(--muted);font-size:.84rem;margin-top:3px}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 8px;font-size:.75rem;font-weight:800;background:rgba(105,228,159,.12);color:var(--green);border:1px solid rgba(105,228,159,.22)}.badge.blue{background:rgba(121,169,255,.12);color:#a8c6ff;border-color:rgba(121,169,255,.22)}.badge.amber{background:rgba(255,201,104,.12);color:#ffd995;border-color:rgba(255,201,104,.22)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(8,17,15,.94);backdrop-filter:blur(16px);border-top:1px solid var(--line);z-index:10}.nav-inner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 8px calc(8px + env(safe-area-inset-bottom))}.nav-btn{background:transparent;border:0;color:var(--muted);font-size:.72rem;padding:6px 3px;display:flex;flex-direction:column;gap:3px;align-items:center}.nav-btn span:first-child{font-size:1.15rem}.nav-btn.active{color:var(--green);font-weight:800}
+.form-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}.field label{font-size:.84rem;color:var(--muted);font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:#0a1512;color:var(--text);outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green2)}
+.segmented{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.seg{border:1px solid var(--line);background:#0a1512;color:var(--muted);padding:10px;border-radius:12px;font-weight:800}.seg.active{background:rgba(105,228,159,.12);color:var(--green);border-color:rgba(105,228,159,.45)}
+.player-pills{display:flex;flex-wrap:wrap;gap:8px}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 10px;background:#0a1512;color:var(--muted)}.pill.active{color:#071b12;background:var(--green);border-color:var(--green)}
+.round-head{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}.hole-info h1{margin:4px 0}.hole-info .sub{color:var(--muted)}.gps-box{border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:12px;text-align:right;min-width:112px}.gps-number{font-size:1.6rem;font-weight:900}.gps-label{font-size:.72rem;color:var(--muted)}
+.scoreboard{margin-top:14px;display:flex;flex-direction:column;gap:10px}.score-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid var(--line);background:var(--panel);border-radius:17px;padding:13px}.score-main{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;background:var(--panel2);display:grid;place-items:center;font-weight:900;color:var(--green)}.score-name{font-weight:800}.score-meta{font-size:.8rem;color:var(--muted);margin-top:2px}.stepper{display:flex;align-items:center;gap:8px}.stepper button{width:36px;height:36px;border-radius:11px;border:1px solid var(--line);background:#0a1512;color:var(--text);font-size:1.15rem}.score-value{min-width:30px;text-align:center;font-size:1.2rem;font-weight:900}
+.hole-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.progress{height:6px;border-radius:999px;background:#14231f;overflow:hidden;margin:12px 0}.progress > span{display:block;height:100%;background:var(--green)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.kpi{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px}.kpi .value{font-size:1.45rem;font-weight:900}.kpi .label{color:var(--muted);font-size:.75rem;margin-top:2px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px}.table{width:100%;border-collapse:collapse;min-width:560px;background:var(--panel)}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left;font-size:.84rem}.table th{color:var(--muted);font-weight:800;background:#0c1714}.table tr:last-child td{border-bottom:0}
+.callout{border:1px solid rgba(105,228,159,.28);background:rgba(105,228,159,.08);border-radius:16px;padding:14px;color:#dff8e9}.callout strong{color:var(--green)}.warning{border-color:rgba(255,201,104,.28);background:rgba(255,201,104,.08);color:#ffe8ba}.danger{border-color:rgba(255,125,125,.3);background:rgba(255,125,125,.08);color:#ffd0d0}
+.course-hole{display:grid;grid-template-columns:50px 1fr 1fr 1fr;gap:8px;align-items:center;margin-bottom:8px}.course-hole input{padding:9px}.course-hole .num{font-weight:900;color:var(--green)}
+.caddie-card{background:linear-gradient(155deg,rgba(105,228,159,.15),rgba(121,169,255,.06)),var(--panel);border:1px solid rgba(105,228,159,.3);border-radius:22px;padding:18px}.club-rec{font-size:2rem;font-weight:950;margin:5px 0}.small{font-size:.82rem;color:var(--muted);line-height:1.4}
+.empty{text-align:center;padding:30px 18px;color:var(--muted);border:1px dashed var(--line);border-radius:16px}.toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);background:#f3f7f5;color:#07130f;padding:10px 14px;border-radius:999px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:30;box-shadow:var(--shadow)}.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.65);display:grid;place-items:end center;z-index:50}.modal{width:min(760px,100%);max-height:88vh;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -20px 60px rgba(0,0,0,.4)}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+@media (max-width:480px){.shell{padding:12px}.hero h1{font-size:1.7rem}.grid{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:1fr 1fr}.course-hole{grid-template-columns:42px 1fr 1fr 1fr}.card{padding:14px}}
+
+/* V1.1 Share Round */
+.round-history-item{align-items:flex-start}.round-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.share-mini{border:1px solid rgba(105,228,159,.3);background:rgba(105,228,159,.08);color:var(--green);border-radius:999px;padding:6px 9px;font-size:.75rem;font-weight:850}
+.share-preview-card{background:radial-gradient(circle at 15% 0%,rgba(105,228,159,.19),transparent 40%),linear-gradient(155deg,#0e201a,#08110f 70%);border:1px solid rgba(105,228,159,.28);border-radius:24px;padding:20px;box-shadow:var(--shadow);overflow:hidden}.share-brand{display:flex;align-items:center;gap:10px;font-weight:950;letter-spacing:.08em}.share-logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(145deg,var(--green),var(--green2));display:grid;place-items:center;color:#052216;letter-spacing:0}.share-kicker{margin-top:24px;color:var(--green);font-size:.72rem;font-weight:900;letter-spacing:.16em}.share-course{font-size:1.15rem;font-weight:800;margin-top:7px}.share-winner{font-size:2.15rem;font-weight:950;margin-top:20px;line-height:1}.share-score{font-size:2.7rem;color:var(--green);font-weight:950;line-height:1.05;margin-top:8px}.share-format{color:var(--muted);font-size:.84rem;margin-top:8px}.share-places{display:flex;flex-direction:column;gap:6px;margin-top:18px}.share-place{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.055);border-radius:12px;padding:9px 10px}.share-place:first-child{background:rgba(105,228,159,.08);border-color:rgba(105,228,159,.18)}.share-place span{color:var(--green);font-weight:900}.share-place b{font-size:.84rem;color:#dff8e9}.share-tagline{border-top:1px solid var(--line);padding-top:14px;margin-top:18px;color:#dff8e9;font-weight:750;font-size:.82rem}.share-help{color:var(--muted);line-height:1.45;font-size:.84rem;margin:14px 2px}.share-buttons{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:8px}.share-buttons .btn{padding:11px 9px}
+@media (max-width:480px){.share-buttons{grid-template-columns:1fr}.round-actions{max-width:120px}.share-winner{font-size:1.8rem}.share-score{font-size:2.25rem}}
+
+
+/* V1.2 Handicap Tracking */
+.handicap-card{display:grid;grid-template-columns:minmax(120px,.8fr) 1.4fr;gap:16px;align-items:center;background:radial-gradient(circle at 0 0,rgba(105,228,159,.14),transparent 48%),var(--panel);border:1px solid rgba(105,228,159,.27);border-radius:20px;padding:17px}.hcp-big{font-size:3.1rem;line-height:1;font-weight:950;color:var(--green);margin:5px 0 8px}.hcp-trend{color:var(--green);min-width:0}.hcp-chart{width:100%;height:84px;display:block;filter:drop-shadow(0 4px 10px rgba(105,228,159,.16));transform:scaleY(-1)}.hcp-impact{display:flex;flex-direction:column;gap:4px;border:1px solid rgba(105,228,159,.28);background:rgba(105,228,159,.08);border-radius:15px;padding:12px;margin-bottom:12px}.hcp-impact strong{color:var(--green)}.hcp-impact span{font-size:1.25rem;font-weight:900}.hcp-impact small{color:var(--muted)}.share-hcp{margin-top:12px;color:var(--green);font-weight:850;font-size:.88rem}.share-toggle{display:flex;align-items:flex-start;gap:9px;color:#dff8e9;font-size:.84rem;line-height:1.35;margin:12px 2px}.share-toggle input{accent-color:var(--green);width:18px;height:18px;flex:0 0 auto}.course-rating-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@media (max-width:480px){.handicap-card{grid-template-columns:1fr}.course-rating-grid{grid-template-columns:1fr 1fr}.course-rating-grid .field:last-child{grid-column:1/-1}}
+
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>
+const APP_KEY='parlink.v1';
+const APP_VERSION='1.2';
+const now=()=>new Date().toISOString();
+const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);
+const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+
+const defaultHoles=()=>Array.from({length:18},(_,i)=>({number:i+1,par:[4,4,3,5,4,3,4,5,4,4,4,3,5,4,3,4,5,4][i],si:[7,3,15,1,9,17,5,11,13,8,4,16,2,10,18,6,12,14][i],lat:null,lng:null}));
+const initialState={
+  view:'home',
+  profile:{name:'Brad',handicap:18,officialHandicap:18,courseCredits:2,clubs:[
+    {name:'Driver',carry:210},{name:'3 Wood',carry:190},{name:'5 Wood',carry:175},{name:'4 Iron',carry:165},{name:'5 Iron',carry:155},{name:'6 Iron',carry:145},{name:'7 Iron',carry:135},{name:'8 Iron',carry:125},{name:'9 Iron',carry:115},{name:'PW',carry:100},{name:'SW',carry:80}
+  ]},
+  players:[
+    {id:'brad',name:'Brad',handicap:18},{id:'paul',name:'Paul',handicap:18},{id:'andrew',name:'Andrew',handicap:18},{id:'wayne',name:'Wayne',handicap:18}
+  ],
+  courses:[{id:'demo',name:'ParLink Demo Course',location:'Demo only',activated:true,isDemo:true,scratchRating:72,slopeRating:113,pcc:0,holes:defaultHoles(),createdAt:now()}],
+  rounds:[],activeRound:null,
+  gpsPlus:false
+};
+let state=load();
+let modal=null;
+let gpsWatchId=null;
+let gpsPosition=null;
+
+function load(){
+  try{const v=JSON.parse(localStorage.getItem(APP_KEY));return v?mergeDefaults(v):structuredClone(initialState)}catch{return structuredClone(initialState)}
+}
+function mergeDefaults(v){
+  const merged={...structuredClone(initialState),...v,profile:{...initialState.profile,...(v.profile||{})},players:v.players?.length?v.players:structuredClone(initialState.players),courses:v.courses?.length?v.courses:structuredClone(initialState.courses),rounds:v.rounds||[]};
+  if(merged.profile.officialHandicap==null)merged.profile.officialHandicap=Number(merged.profile.handicap||0);
+  merged.courses=merged.courses.map(c=>({...c,scratchRating:Number(c.scratchRating??parTotalSafe(c)),slopeRating:Number(c.slopeRating??113),pcc:Number(c.pcc??0)}));
+  return merged;
+}
+function parTotalSafe(course){return (course?.holes||[]).reduce((a,h)=>a+Number(h.par||0),0)||72}
+
+function save(){localStorage.setItem(APP_KEY,JSON.stringify(state))}
+function setView(v){state.view=v;save();render();window.scrollTo({top:0,behavior:'smooth'})}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function initials(name){return name.split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase()}
+function fmtDate(s){return new Date(s).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})}
+function courseById(id){return state.courses.find(c=>c.id===id)}
+function playerById(id){return state.players.find(p=>p.id===id)}
+function activeCourses(){return state.courses.filter(c=>c.activated||c.isDemo)}
+function activatedPaidCount(){return state.courses.filter(c=>c.activated&&!c.isDemo).length}
+function creditsLeft(){return Math.max(0,(state.profile.courseCredits||2)-activatedPaidCount())}
+function parTotal(course){return course.holes.reduce((a,h)=>a+Number(h.par||0),0)}
+function round1(n){return Math.round((Number(n)+Number.EPSILON)*10)/10}
+function handicapScoreCountRule(n){
+  if(n<3)return {count:0,adjustment:0};
+  if(n===3)return {count:1,adjustment:-2};
+  if(n===4)return {count:1,adjustment:-1};
+  if(n===5)return {count:1,adjustment:0};
+  if(n===6)return {count:2,adjustment:-1};
+  if(n<=8)return {count:2,adjustment:0};
+  if(n<=11)return {count:3,adjustment:0};
+  if(n<=14)return {count:4,adjustment:0};
+  if(n<=16)return {count:5,adjustment:0};
+  if(n<=18)return {count:6,adjustment:0};
+  if(n===19)return {count:7,adjustment:0};
+  return {count:8,adjustment:0};
+}
+function scoreDifferential(points,dailyHandicap,course){
+  if(!course)return null;
+  const par=parTotal(course),scratch=Number(course.scratchRating??par),slope=Number(course.slopeRating??113),pcc=Number(course.pcc??0);
+  if(!Number.isFinite(slope)||slope<=0)return null;
+  return round1(((36-Number(points||0))+Number(dailyHandicap||0)+par-(scratch+pcc))*(113/slope));
+}
+function handicapEntries(playerId='brad',rounds=state.rounds){
+  return (rounds||[]).filter(r=>r.format!=='ambrose').map(r=>{
+    const result=(r.results||[]).find(x=>x.playerId===playerId);if(!result)return null;
+    const course=courseById(r.courseId)||{holes:Array.from({length:18},()=>({par:4})),scratchRating:r.scratchRating||72,slopeRating:r.slopeRating||113,pcc:r.pcc||0};
+    let differential=result.scoreDifferential;
+    if(differential==null){
+      const hcp=result.handicapUsed??playerById(playerId)?.handicap??state.profile.officialHandicap??state.profile.handicap??0;
+      differential=scoreDifferential(result.points,hcp,course);
+    }
+    return differential==null?null:{roundId:r.id,date:r.completedAt,courseName:r.courseName||course.name||'Course',differential:round1(differential)};
+  }).filter(Boolean).slice(-20);
+}
+function estimateHandicap(playerId='brad',rounds=state.rounds){
+  const entries=handicapEntries(playerId,rounds),n=entries.length,rule=handicapScoreCountRule(n);
+  if(!rule.count)return {value:null,status:n?`${n} qualifying round${n===1?'':'s'} · need 3`:'Need 3 qualifying rounds',entries,used:[]};
+  const sorted=[...entries].sort((a,b)=>a.differential-b.differential),used=sorted.slice(0,rule.count);
+  const avg=used.reduce((a,x)=>a+x.differential,0)/used.length;
+  const value=Math.min(54,round1(avg+rule.adjustment));
+  return {value,status:`${n} qualifying rounds · lowest ${rule.count}${rule.adjustment?` · ${rule.adjustment.toFixed(1)} adjustment`:''}`,entries,used};
+}
+function handicapTrend(playerId='brad'){
+  const all=state.rounds.filter(r=>r.format!=='ambrose'&&(r.results||[]).some(x=>x.playerId===playerId));
+  return all.map((_,i)=>estimateHandicap(playerId,all.slice(0,i+1)).value).filter(v=>v!=null);
+}
+function handicapSparkline(values){
+  if(!values?.length)return '';
+  const w=300,h=84,p=8,min=Math.min(...values),max=Math.max(...values),span=Math.max(1,max-min);
+  const pts=values.map((v,i)=>`${p+(i*(w-2*p)/Math.max(1,values.length-1))},${p+((v-min)/span)*(h-2*p)}`).join(' ');
+  return `<svg class="hcp-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Estimated handicap trend"><polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+function nav(){
+  const items=[['home','⌂','Home'],['play','⛳','Golf'],['stats','▥','Stats'],['mates','♟','Mates'],['profile','●','Profile']];
+  return `<nav class="bottom-nav"><div class="nav-inner">${items.map(([v,i,l])=>`<button class="nav-btn ${state.view===v?'active':''}" data-nav="${v}"><span>${i}</span><span>${l}</span></button>`).join('')}</div></nav>`;
+}
+function header(title='ParLink'){
+  return `<header class="header"><div class="brand"><div class="brand-mark">PL</div><div>${esc(title)}</div></div><div class="header-actions"><button class="icon-btn" data-action="install">＋</button></div></header>`;
+}
+function shell(content,title='ParLink'){return `<main class="shell">${header(title)}${content}</main>${nav()}`}
+
+function homeView(){
+  const last=state.rounds.at(-1);
+  const best=bestRound();
+  const hcp=estimateHandicap('brad');
+  return shell(`
+    <section class="hero"><div class="eyebrow">ParLink V1.2</div><h1>Know your game.<br>Beat your mates.<br>Beat yourself.</h1><p>Score rounds, build your stats, challenge a phantom and get simple club advice without a compulsory subscription.</p></section>
+    <div class="grid">
+      <button class="card" data-go="play"><div class="emoji">⛳</div><h3>Play</h3><p>Stroke, Stableford and Ambrose.</p></button>
+      <button class="card" data-go="phantom"><div class="emoji">👻</div><h3>Phantom</h3><p>Play against your best or last round.</p></button>
+      <button class="card" data-go="mates"><div class="emoji">🏆</div><h3>Compete</h3><p>Mates, winners and round history.</p></button>
+      <button class="card" data-go="caddie"><div class="emoji">🧠</div><h3>Caddie</h3><p>Club advice from your own carry numbers.</p></button>
+    </div>
+    <section class="section"><div class="section-title"><h2>Your ParLink</h2><span>${creditsLeft()} course credits left</span></div>
+      <div class="kpis"><div class="kpi"><div class="value">${state.rounds.length}</div><div class="label">Rounds</div></div><div class="kpi"><div class="value">${activeCourses().length}</div><div class="label">Courses</div></div><div class="kpi"><div class="value">${best?bestSummary(best):'—'}</div><div class="label">Best</div></div><div class="kpi"><div class="value">${hcp.value??'—'}</div><div class="label">ParLink HCP</div></div></div>
+    </section>
+    ${last?`<section class="section"><div class="section-title"><h2>Last round</h2><span>${fmtDate(last.completedAt)}</span></div>${roundCard(last)}</section>`:''}
+    <section class="section"><div class="callout"><strong>V1 runs locally.</strong> Your rounds, courses and player data stay on this device. No Lovable account or paid backend is required.</div></section>
+  `);
+}
+function bestSummary(r){const p=r.results?.[0];if(!p)return '—';return r.format==='stableford'?`${p.points} pts`:`${p.toPar>0?'+':''}${p.toPar}`}
+function roundCard(r){
+  const c=courseById(r.courseId);const lead=r.results?.[0];
+  const result=lead?(r.format==='stableford'?lead.points+' pts':(lead.toPar>0?'+':'')+lead.toPar):'Saved';
+  return `<div class="list-item round-history-item"><div><strong>${esc(c?.name||r.courseName||'Course')}</strong><div class="meta">${esc(r.format)} · ${r.players.length} player${r.players.length!==1?'s':''}</div></div><div class="round-actions"><span class="badge ${r.format==='stableford'?'blue':''}">${result}</span><button class="share-mini" data-share-round="${r.id}" aria-label="Share round">↗ Share</button></div></div>`}
+
+function playView(){
+  if(state.activeRound) return roundView();
+  return shell(`
+    <div class="section-title"><h2>Start a round</h2><span>${activeCourses().length} available courses</span></div>
+    <div class="form-card">
+      <div class="field"><label>Course</label><select id="round-course">${activeCourses().map(c=>`<option value="${c.id}">${esc(c.name)}${c.isDemo?' · demo':''}</option>`).join('')}</select></div>
+      <div class="field"><label>Format</label><div class="segmented" id="format-tabs">${['stroke','stableford','ambrose'].map((f,i)=>`<button class="seg ${i===0?'active':''}" data-format="${f}">${f[0].toUpperCase()+f.slice(1)}</button>`).join('')}</div></div>
+      <div class="field"><label>Players</label><div class="player-pills">${state.players.map((p,i)=>`<button class="pill ${i===0?'active':''}" data-player-select="${p.id}">${esc(p.name)} · ${p.handicap}</button>`).join('')}</div></div>
+      <button class="btn btn-primary" style="width:100%" data-action="start-round">Start round</button>
+    </div>
+    <section class="section"><div class="section-title"><h2>Course library</h2><span>${creditsLeft()} of ${state.profile.courseCredits} credits unused</span></div>
+      <div class="btn-row"><button class="btn btn-secondary" data-action="new-course">＋ Add course</button><button class="btn btn-secondary" data-action="import-course">Import JSON</button></div>
+      <div class="list" style="margin-top:10px">${state.courses.map(courseCard).join('')}</div>
+    </section>
+  `,'Golf');
+}
+function courseCard(c){return `<div class="list-item"><div><strong>${esc(c.name)}</strong><div class="meta">${esc(c.location||'')} · Par ${parTotal(c)} · SR ${Number(c.scratchRating??parTotal(c)).toFixed(1)} · Slope ${Number(c.slopeRating??113)}</div></div><div>${c.isDemo?'<span class="badge blue">Demo</span>':c.activated?'<span class="badge">Activated</span>':`<button class="btn btn-secondary" data-activate-course="${c.id}" ${creditsLeft()<=0?'disabled':''}>Use credit</button>`}</div></div>`}
+
+function startRound(){
+  const courseId=document.getElementById('round-course')?.value;
+  const format=document.querySelector('.seg.active')?.dataset.format||'stroke';
+  const selected=[...document.querySelectorAll('.pill.active')].map(x=>x.dataset.playerSelect);
+  if(!courseId||!selected.length)return toast('Choose a course and at least one player');
+  const c=courseById(courseId);
+  state.activeRound={id:uid(),courseId,format,playerIds:selected,hole:1,startedAt:now(),scores:Object.fromEntries(selected.map(pid=>[pid,Array(18).fill(null)])),phantomRoundId:null};
+  save();render();
+}
+function roundView(){
+  const r=state.activeRound,c=courseById(r.courseId),h=c.holes[r.hole-1];
+  if(!h){state.activeRound=null;save();return playView()}
+  const dist=currentDistance(h);
+  const progress=Math.round((r.hole/18)*100);
+  return shell(`
+    <div class="round-head"><div class="hole-info"><div class="eyebrow">${esc(c.name)}</div><h1>Hole ${r.hole}</h1><div class="sub">Par ${h.par} · SI ${h.si} · ${r.format[0].toUpperCase()+r.format.slice(1)}</div></div><button class="gps-box" data-action="gps"><div class="gps-number">${dist??'GPS'}</div><div class="gps-label">${dist?'metres to green':'tap to locate'}</div></button></div>
+    <div class="progress"><span style="width:${progress}%"></span></div>
+    <div class="scoreboard">${r.playerIds.map(pid=>scoreRow(r,pid,h)).join('')}</div>
+    ${r.phantomRoundId?phantomStrip(r):''}
+    <div class="hole-nav"><button class="btn btn-secondary" data-action="prev-hole" ${r.hole===1?'disabled':''}>← Previous</button><button class="btn btn-primary" data-action="${r.hole===18?'finish-round':'next-hole'}">${r.hole===18?'Finish round':'Next hole →'}</button></div>
+    <section class="section"><div class="btn-row"><button class="btn btn-secondary" data-action="round-caddie">🧠 Caddie</button><button class="btn btn-secondary" data-action="enable-phantom">👻 Phantom</button><button class="btn btn-danger" data-action="abandon-round">Abandon</button></div></section>
+  `,'Round');
+}
+function scoreRow(r,pid,h){const p=playerById(pid),score=r.scores[pid][r.hole-1],shown=score??h.par;const pts=r.format==='stableford'&&score?stablefordPoints(score,h,p.handicap):null;return `<div class="score-row"><div class="score-main"><div class="avatar">${initials(p.name)}</div><div><div class="score-name">${esc(p.name)}</div><div class="score-meta">HCP ${p.handicap}${pts!==null?` · ${pts} pts`:''}</div></div></div><div class="stepper"><button data-score="${pid}" data-delta="-1">−</button><div class="score-value">${shown}</div><button data-score="${pid}" data-delta="1">＋</button></div></div>`}
+function stablefordPoints(gross,hole,hcp){const base=Math.floor(hcp/18),extra=hole.si<=hcp%18?1:0,strokes=base+extra;return Math.max(0,2+hole.par+strokes-gross)}
+function currentDistance(h){if(!gpsPosition||h.lat==null||h.lng==null)return null;return Math.round(haversine(gpsPosition.latitude,gpsPosition.longitude,Number(h.lat),Number(h.lng)))}
+function haversine(lat1,lon1,lat2,lon2){const R=6371000,toRad=x=>x*Math.PI/180;const a=Math.sin(toRad(lat2-lat1)/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(toRad(lon2-lon1)/2)**2;return 2*R*Math.asin(Math.sqrt(a))}
+function changeScore(pid,delta){const r=state.activeRound,c=courseById(r.courseId),h=c.holes[r.hole-1],i=r.hole-1;let s=r.scores[pid][i];if(s==null)s=h.par;s=Math.max(1,s+delta);r.scores[pid][i]=s;save();render()}
+function allCurrentScores(){const r=state.activeRound;return r.playerIds.every(pid=>r.scores[pid][r.hole-1]!=null)}
+function nextHole(){if(!allCurrentScores()) return toast('Enter a score for each player');state.activeRound.hole=Math.min(18,state.activeRound.hole+1);save();render()}
+function prevHole(){state.activeRound.hole=Math.max(1,state.activeRound.hole-1);save();render()}
+function finishRound(){
+  const r=state.activeRound;if(!allCurrentScores())return toast('Enter a score for each player');
+  const c=courseById(r.courseId);const beforeEstimate=estimateHandicap('brad').value;
+  const results=r.playerIds.map(pid=>{const p=playerById(pid),scores=r.scores[pid].map((s,i)=>s??c.holes[i].par);const gross=scores.reduce((a,b)=>a+b,0);const points=scores.reduce((a,s,i)=>a+stablefordPoints(s,c.holes[i],p.handicap),0);const net=gross-p.handicap;const diff=r.format==='ambrose'?null:scoreDifferential(points,p.handicap,c);return {playerId:pid,name:p.name,gross,net,points,toPar:gross-parTotal(c),handicapUsed:p.handicap,scoreDifferential:diff};}).sort((a,b)=>r.format==='stableford'?b.points-a.points:a.net-b.net);
+  const completed={...r,courseName:c.name,scratchRating:Number(c.scratchRating??parTotal(c)),slopeRating:Number(c.slopeRating??113),pcc:Number(c.pcc??0),completedAt:now(),results,handicapBefore:beforeEstimate};
+  state.rounds.push(completed);completed.handicapAfter=estimateHandicap('brad').value;state.activeRound=null;state.view='stats';save();openShareRound(completed.id,true);toast('Round saved');
+}
+function phantomStrip(r){const pr=state.rounds.find(x=>x.id===r.phantomRoundId);if(!pr)return'';const pid=r.playerIds[0],current=sumThrough(r.scores[pid],r.hole),past=sumThrough(pr.scores[pr.playerIds[0]]||[],r.hole);const diff=current-past;return `<section class="section"><div class="callout"><strong>👻 Phantom:</strong> ${diff===0?'Level':diff>0?`${diff} shots behind`:`${Math.abs(diff)} shots ahead`} through ${r.hole}.</div></section>`}
+function sumThrough(arr,hole){return arr.slice(0,hole).reduce((a,s)=>a+(Number(s)||0),0)}
+function bestRound(){if(!state.rounds.length)return null;return [...state.rounds].sort((a,b)=>{const ar=a.results?.[0],br=b.results?.[0];if(!ar||!br)return 0;if(a.format==='stableford'&&b.format==='stableford')return br.points-ar.points;return ar.net-br.net})[0]}
+
+
+function shareResultLabel(r,res){
+  if(!res)return 'Round complete';
+  if(r.format==='stableford')return `${res.points} pts`;
+  return `${res.gross} gross · ${res.toPar>0?'+':''}${res.toPar}`;
+}
+function formatName(f){return f?f[0].toUpperCase()+f.slice(1):''}
+function shareRoundText(r){
+  const lead=r.results?.[0];
+  const course=courseById(r.courseId)?.name||r.courseName||'Golf course';
+  const lines=[`⛳ ${course}`,`${formatName(r.format)} · ${fmtDate(r.completedAt)}`];
+  if(lead)lines.push(`🏆 ${lead.name}: ${shareResultLabel(r,lead)}`);
+  if(r.results?.length>1){
+    lines.push('', 'Mates result:');
+    r.results.slice(0,4).forEach((x,i)=>lines.push(`${i+1}. ${x.name} — ${r.format==='stableford'?x.points+' pts':x.gross+' ('+(x.toPar>0?'+':'')+x.toPar+')'}`));
+  }
+  const est=estimateHandicap('brad'); if(window.__shareHandicap&&lead?.playerId==='brad'&&est.value!=null)lines.push('',`📉 ParLink estimated handicap: ${est.value.toFixed(1)}`);
+  lines.push('', 'Scored with ParLink','Know your game. Beat your mates. Beat yourself.');
+  return lines.join('\n');
+}
+function sharePreviewHtml(r){
+  const lead=r.results?.[0];
+  const course=courseById(r.courseId)?.name||r.courseName||'Course';
+  const places=(r.results||[]).slice(0,4).map((x,i)=>`<div class="share-place"><span>${i+1}</span><strong>${esc(x.name)}</strong><b>${r.format==='stableford'?x.points+' pts':x.gross}</b></div>`).join('');
+  return `<div class="share-preview-card"><div class="share-brand"><div class="share-logo">PL</div><div>PARLINK</div></div><div class="share-kicker">ROUND COMPLETE</div><div class="share-course">${esc(course)}</div>${lead?`<div class="share-winner">${esc(lead.name)}</div><div class="share-score">${esc(shareResultLabel(r,lead))}</div>`:''}<div class="share-format">${esc(formatName(r.format))} · ${fmtDate(r.completedAt)}</div>${places?`<div class="share-places">${places}</div>`:''}${lead?.playerId==='brad'&&r.handicapAfter!=null?`<div class="share-hcp">ParLink HCP ${Number(r.handicapAfter).toFixed(1)}${r.handicapBefore!=null?` · ${r.handicapAfter<r.handicapBefore?'↓':r.handicapAfter>r.handicapBefore?'↑':'→'} ${Math.abs(r.handicapAfter-r.handicapBefore).toFixed(1)}`:''}</div>`:''}<div class="share-tagline">Know your game. Beat your mates. Beat yourself.</div></div>`;
+}
+function openShareRound(roundId,fresh=false){
+  const r=state.rounds.find(x=>x.id===roundId);if(!r)return toast('Round not found');
+  window.__shareRoundId=roundId;window.__shareHandicap=false;
+  const owner=(r.results||[]).find(x=>x.playerId==='brad');
+  const impact=owner&&r.handicapAfter!=null?`<div class="hcp-impact"><strong>Handicap impact</strong><span>${r.handicapBefore==null?'New estimate':Number(r.handicapBefore).toFixed(1)} → ${Number(r.handicapAfter).toFixed(1)}</span><small>ParLink estimate only · not an official GA Handicap</small></div>`:'';
+  const toggle=owner&&r.handicapAfter!=null?`<label class="share-toggle"><input id="share-handicap-toggle" type="checkbox"> Include ParLink estimated handicap on shared result</label>`:'';
+  modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>${fresh?'Round complete':'Share round'}</h2><button class="icon-btn" data-action="close-modal">✕</button></div>${impact}${sharePreviewHtml(r)}${toggle}<div class="share-help">Create a branded result card, then use your phone's share sheet for Instagram, Facebook, Messenger, WhatsApp and more.</div><div class="share-buttons"><button class="btn btn-primary" data-action="share-native">↗ Share result</button><button class="btn btn-secondary" data-action="save-share-card">Save image</button><button class="btn btn-secondary" data-action="copy-share-text">Copy text</button></div><div class="small" style="margin-top:10px">The image shows the completed round only. Your other ParLink data stays on this device.</div></div></div>`;
+  render();
+}
+function syncShareHandicap(){window.__shareHandicap=!!document.getElementById('share-handicap-toggle')?.checked}
+function canvasRoundData(r){
+  const course=courseById(r.courseId)?.name||r.courseName||'Golf Course';
+  const lead=r.results?.[0];
+  return {course,lead,places:(r.results||[]).slice(0,4),date:fmtDate(r.completedAt),format:formatName(r.format)};
+}
+function roundCardBlob(r){
+  return new Promise((resolve,reject)=>{
+    try{
+      const W=1080,H=1350,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d');
+      const d=canvasRoundData(r);
+      const grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,'#06100d');grad.addColorStop(.58,'#0c1d18');grad.addColorStop(1,'#153226');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+      const glow=ctx.createRadialGradient(180,120,10,180,120,520);glow.addColorStop(0,'rgba(105,228,159,.26)');glow.addColorStop(1,'rgba(105,228,159,0)');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
+      ctx.fillStyle='#69e49f';roundRect(ctx,70,66,116,116,30);ctx.fill();ctx.fillStyle='#052216';ctx.font='900 56px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('PL',128,124);
+      ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillStyle='#f3f7f5';ctx.font='900 62px system-ui';ctx.fillText('PAR',220,137);ctx.fillStyle='#69e49f';ctx.fillText('LINK',352,137);
+      ctx.fillStyle='#69e49f';ctx.font='800 28px system-ui';ctx.fillText('ROUND COMPLETE',72,246);
+      ctx.fillStyle='#f3f7f5';ctx.font='800 54px system-ui';wrapText(ctx,d.course,72,320,936,64,2);
+      ctx.fillStyle='#a8b7b1';ctx.font='600 28px system-ui';ctx.fillText(`${d.format} · ${d.date}`,72,430);
+      if(d.lead){
+        ctx.fillStyle='#a8b7b1';ctx.font='700 28px system-ui';ctx.fillText(d.places.length>1?'WINNER':'RESULT',72,520);
+        ctx.fillStyle='#f3f7f5';ctx.font='900 78px system-ui';ctx.fillText(d.lead.name,72,610);
+        ctx.fillStyle='#69e49f';ctx.font='950 116px system-ui';ctx.fillText(shareResultLabel(r,d.lead),72,742);
+      }
+      let y=830;
+      if(d.places.length>1){
+        ctx.fillStyle='#a8b7b1';ctx.font='700 26px system-ui';ctx.fillText('MATES RESULT',72,y);y+=54;
+        d.places.forEach((x,i)=>{
+          ctx.fillStyle=i===0?'rgba(105,228,159,.14)':'rgba(255,255,255,.045)';roundRect(ctx,72,y-38,936,82,20);ctx.fill();
+          ctx.fillStyle=i===0?'#69e49f':'#dfe9e5';ctx.font='800 30px system-ui';ctx.fillText(`${i+1}`,98,y+10);
+          ctx.fillStyle='#f3f7f5';ctx.fillText(x.name,152,y+10);
+          ctx.textAlign='right';ctx.fillStyle=i===0?'#69e49f':'#f3f7f5';ctx.fillText(r.format==='stableford'?`${x.points} pts`:`${x.gross}  ${(x.toPar>0?'+':'')+x.toPar}`,978,y+10);ctx.textAlign='left';y+=94;
+        });
+      }
+      if(window.__shareHandicap&&d.lead?.playerId==='brad'&&r.handicapAfter!=null){ctx.fillStyle='#69e49f';ctx.font='800 25px system-ui';ctx.fillText(`ParLink estimated handicap: ${Number(r.handicapAfter).toFixed(1)}`,72,H-242);}
+      ctx.fillStyle='#263a34';ctx.fillRect(72,H-206,936,2);
+      ctx.fillStyle='#f3f7f5';ctx.font='800 28px system-ui';ctx.fillText('Know your game. Beat your mates. Beat yourself.',72,H-142);
+      ctx.fillStyle='#69e49f';ctx.font='700 24px system-ui';ctx.fillText('PARLINK',72,H-90);
+      ctx.textAlign='right';ctx.fillStyle='#a8b7b1';ctx.font='600 22px system-ui';ctx.fillText(location.host||'ParLink',1008,H-90);
+      canvas.toBlob(b=>b?resolve(b):reject(new Error('Could not create image')),'image/png',.95);
+    }catch(e){reject(e)}
+  });
+}
+function roundRect(ctx,x,y,w,h,r){const rr=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath()}
+function wrapText(ctx,text,x,y,maxWidth,lineHeight,maxLines=3){const words=String(text).split(' ');let line='',lines=[];for(const word of words){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line);lines.slice(0,maxLines).forEach((ln,i)=>ctx.fillText(ln,x,y+i*lineHeight));}
+async function shareNative(){
+  syncShareHandicap();
+  const r=state.rounds.find(x=>x.id===window.__shareRoundId);if(!r)return toast('Round not found');
+  const text=shareRoundText(r);
+  try{
+    const blob=await roundCardBlob(r);const file=new File([blob],`ParLink-${new Date(r.completedAt).toISOString().slice(0,10)}.png`,{type:'image/png'});
+    if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({title:'ParLink round result',text,files:[file]});return}
+    if(navigator.share){await navigator.share({title:'ParLink round result',text});return}
+    await saveShareCard();
+  }catch(e){if(e?.name!=='AbortError')toast('Share cancelled or unavailable')}
+}
+async function saveShareCard(){
+  syncShareHandicap();
+  const r=state.rounds.find(x=>x.id===window.__shareRoundId);if(!r)return toast('Round not found');
+  try{const blob=await roundCardBlob(r);const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`ParLink-${new Date(r.completedAt).toISOString().slice(0,10)}.png`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1200);toast('Share card saved')}catch{toast('Could not create share card')}
+}
+async function copyShareText(){
+  syncShareHandicap();
+  const r=state.rounds.find(x=>x.id===window.__shareRoundId);if(!r)return toast('Round not found');
+  try{await navigator.clipboard.writeText(shareRoundText(r));toast('Result copied')}catch{toast('Could not copy result')}
+}
+
+function phantomView(){
+  const candidates=state.rounds.slice().reverse();
+  return shell(`
+    <section class="hero"><div class="eyebrow">Phantom Mode</div><h1>Challenge a round you've already played.</h1><p>Your opponent is your own scorecard. No gimmicks. Just you versus a real previous round.</p></section>
+    <section class="section"><div class="section-title"><h2>Available phantoms</h2><span>${candidates.length} saved</span></div>${candidates.length?`<div class="list">${candidates.map(r=>`<div class="list-item"><div><strong>${esc(courseById(r.courseId)?.name||r.courseName)}</strong><div class="meta">${fmtDate(r.completedAt)} · ${r.format}</div></div><span class="badge">${bestSummary(r)}</span></div>`).join('')}</div>`:`<div class="empty">Finish a round first. Your saved rounds become Phantom opponents.</div>`}</section>
+    <section class="section"><div class="callout"><strong>How it works:</strong> start a normal round, tap Phantom during play, then choose a saved round from the same course.</div></section>
+  `,'Phantom');
+}
+function enablePhantom(){
+  const r=state.activeRound;const same=state.rounds.filter(x=>x.courseId===r.courseId);
+  if(!same.length)return toast('No saved round on this course yet');
+  modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>Choose a Phantom</h2><button class="icon-btn" data-action="close-modal">✕</button></div><div class="list">${same.slice().reverse().map(x=>`<button class="list-item" style="color:inherit;text-align:left;width:100%" data-phantom="${x.id}"><div><strong>${fmtDate(x.completedAt)}</strong><div class="meta">${x.format} · ${bestSummary(x)}</div></div><span>→</span></button>`).join('')}</div></div></div>`;render();
+}
+
+function caddieView(){
+  return shell(`
+    <section class="hero"><div class="eyebrow">ParLink Caddie</div><h1>Advice from your own distances.</h1><p>V1 uses your saved carry numbers. GPS-enabled rounds can feed the remaining distance straight into Caddie.</p></section>
+    <section class="section"><div class="form-card"><div class="field"><label>Distance to target (m)</label><input id="caddie-distance" type="number" min="1" value="135"></div><button class="btn btn-primary" data-action="caddie-recommend">Recommend club</button></div></section>
+    <section class="section" id="caddie-result">${caddieRecommendation(135)}</section>
+    <section class="section"><div class="section-title"><h2>Your carry numbers</h2><span>Edit in Profile</span></div><div class="list">${state.profile.clubs.map(c=>`<div class="list-item"><strong>${esc(c.name)}</strong><span>${c.carry} m</span></div>`).join('')}</div></section>
+  `,'Caddie');
+}
+function caddieRecommendation(distance){const clubs=[...state.profile.clubs].sort((a,b)=>a.carry-b.carry);if(!clubs.length)return'<div class="empty">Add club distances in Profile.</div>';const nearest=clubs.reduce((a,b)=>Math.abs(b.carry-distance)<Math.abs(a.carry-distance)?b:a);const safe=clubs.find(c=>c.carry>=distance)||clubs.at(-1);return `<div class="caddie-card"><div class="eyebrow">Recommended</div><div class="club-rec">${esc(nearest.name)}</div><div>${nearest.carry} m normal carry · target ${distance} m</div><hr><div class="small"><strong>Safe option:</strong> ${esc(safe.name)} (${safe.carry} m). V1 deliberately keeps the advice simple. Wind, lie, hazards and dispersion are reserved for GPS+ / Caddie upgrades.</div></div>`}
+function roundCaddie(){const r=state.activeRound,c=courseById(r.courseId),h=c.holes[r.hole-1],d=currentDistance(h);modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>ParLink Caddie</h2><button class="icon-btn" data-action="close-modal">✕</button></div>${caddieRecommendation(d||135)}${!d?'<div class="callout warning" style="margin-top:12px">No green coordinate/GPS distance is available for this hole, so V1 is showing a 135 m example.</div>':''}</div></div>`;render()}
+
+function statsView(){
+  const rounds=state.rounds.slice().reverse();
+  const total=rounds.length;const avg=total?Math.round(rounds.reduce((a,r)=>a+(r.results?.[0]?.gross||0),0)/total):0;
+  const hcp=estimateHandicap('brad'),trend=handicapTrend('brad'),usedIds=new Set(hcp.used.map(x=>x.roundId));
+  return shell(`
+    <div class="section-title"><h2>Performance</h2><span>${total} completed rounds</span></div>
+    <div class="kpis"><div class="kpi"><div class="value">${total}</div><div class="label">Rounds</div></div><div class="kpi"><div class="value">${avg||'—'}</div><div class="label">Avg gross*</div></div><div class="kpi"><div class="value">${state.courses.length}</div><div class="label">Courses saved</div></div></div>
+    <div class="small" style="margin-top:8px">*Average uses the leading result in each saved round.</div>
+    <section class="section"><div class="section-title"><h2>ParLink Handicap</h2><span>GA-style estimate</span></div>
+      <div class="handicap-card"><div><div class="eyebrow">Estimated handicap</div><div class="hcp-big">${hcp.value==null?'—':hcp.value.toFixed(1)}</div><div class="small">Official / entered: ${Number(state.profile.officialHandicap??state.profile.handicap??0).toFixed(1)}</div></div><div class="hcp-trend">${handicapSparkline(trend)}<div class="small">${esc(hcp.status)}</div></div></div>
+      <div class="callout warning" style="margin-top:10px"><strong>Estimate only.</strong> ParLink is not connected to GOLF Link. It uses saved ParLink rounds, Scratch Rating, Slope Rating and PCC data. Official cap and exceptional-score adjustments are not applied.</div>
+    </section>
+    <section class="section"><div class="section-title"><h2>Score differentials</h2><span>Most recent 20</span></div>${hcp.entries.length?`<div class="list">${[...hcp.entries].reverse().map(x=>`<div class="list-item"><div><strong>${esc(x.courseName)}</strong><div class="meta">${fmtDate(x.date)}${usedIds.has(x.roundId)?' · counting':''}</div></div><span class="badge ${usedIds.has(x.roundId)?'':'blue'}">${x.differential.toFixed(1)}</span></div>`).join('')}</div>`:`<div class="empty">Complete at least 3 individual rounds on courses with rating data to generate a ParLink handicap estimate.</div>`}</section>
+    <section class="section"><div class="section-title"><h2>Round history</h2><span>Newest first</span></div>${rounds.length?`<div class="list">${rounds.map(roundCard).join('')}</div>`:`<div class="empty">No completed rounds yet.</div>`}</section>
+  `,'Stats');
+}
+
+function matesView(){
+  const wins={};state.players.forEach(p=>wins[p.id]=0);state.rounds.forEach(r=>{const w=r.results?.[0]?.playerId;if(w)wins[w]=(wins[w]||0)+1});
+  const ladder=[...state.players].sort((a,b)=>(wins[b.id]||0)-(wins[a.id]||0));
+  return shell(`
+    <div class="section-title"><h2>Mates ladder</h2><span>Wins from saved rounds</span></div>
+    <div class="list">${ladder.map((p,i)=>`<div class="list-item"><div class="score-main"><div class="avatar">${i+1}</div><div><strong>${esc(p.name)}</strong><div class="meta">HCP ${p.handicap}</div></div></div><span class="badge ${i===0?'':'blue'}">${wins[p.id]||0} win${wins[p.id]===1?'':'s'}</span></div>`).join('')}</div>
+    <section class="section"><button class="btn btn-secondary" data-action="edit-players">Edit players</button></section>
+  `,'Mates');
+}
+
+function profileView(){
+  return shell(`
+    <div class="form-card"><div class="section-title"><h2>Profile</h2><span>Stored on device</span></div>
+      <div class="field"><label>Name</label><input id="profile-name" value="${esc(state.profile.name)}"></div>
+      <div class="field"><label>Official / entered handicap</label><input id="profile-hcp" type="number" min="0" max="54" step="0.1" value="${state.profile.officialHandicap??state.profile.handicap}"></div>
+      <button class="btn btn-primary" data-action="save-profile">Save profile</button>
+      <div class="small" style="margin-top:10px">This is your official or manually entered handicap. ParLink keeps its calculated estimate separate.</div>
+    </div>
+    <section class="section"><div class="section-title"><h2>Handicap tracking</h2><span>ParLink estimate</span></div>${(()=>{const h=estimateHandicap('brad');return `<div class="list-item"><div><strong>${h.value==null?'Not enough rounds':h.value.toFixed(1)}</strong><div class="meta">${esc(h.status)}</div></div><button class="btn btn-secondary" data-nav="stats">View details</button></div>`})()}</section>
+    <section class="section"><div class="section-title"><h2>Club distances</h2><span>Carry metres</span></div><div class="list">${state.profile.clubs.map((c,i)=>`<div class="list-item"><input class="club-name" data-i="${i}" value="${esc(c.name)}" style="max-width:150px"><input class="club-carry" data-i="${i}" type="number" value="${c.carry}" style="max-width:100px"></div>`).join('')}</div><div class="btn-row" style="margin-top:10px"><button class="btn btn-primary" data-action="save-clubs">Save clubs</button><button class="btn btn-secondary" data-action="add-club">＋ Add club</button></div></section>
+    <section class="section"><div class="section-title"><h2>Course plan</h2><span>${creditsLeft()} credits left</span></div><div class="callout"><strong>2 course credits included.</strong> Demo courses do not consume a credit. Activating a user-added course uses one credit in this V1 prototype.</div></section>
+    <section class="section"><div class="section-title"><h2>GPS+</h2><span>Prototype switch</span></div><div class="list-item"><div><strong>GPS+ access</strong><div class="meta">Future paid plan for unlimited courses and richer GPS.</div></div><button class="btn ${state.gpsPlus?'btn-primary':'btn-secondary'}" data-action="toggle-gpsplus">${state.gpsPlus?'Enabled':'Enable demo'}</button></div></section>
+    <section class="section"><button class="btn btn-danger" data-action="reset-app">Reset all ParLink V1.2 data</button></section>
+  `,'Profile');
+}
+
+function newCourseModal(){
+  modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>Add course</h2><button class="icon-btn" data-action="close-modal">✕</button></div><div class="field"><label>Course name</label><input id="course-name" placeholder="e.g. My Golf Club"></div><div class="field"><label>Location</label><input id="course-location" placeholder="Town / region"></div><div class="course-rating-grid"><div class="field"><label>Scratch Rating</label><input id="course-scratch" type="number" step="0.1" value="72"></div><div class="field"><label>Slope Rating</label><input id="course-slope" type="number" min="55" max="155" value="113"></div><div class="field"><label>PCC</label><input id="course-pcc" type="number" min="-1" max="3" step="1" value="0"></div></div><div class="small">Rating data is used for the ParLink handicap estimate. Set par, stroke index and optional green-centre coordinates below.</div><div style="margin-top:12px">${defaultHoles().map(h=>`<div class="course-hole"><div class="num">${h.number}</div><input data-hole-par="${h.number}" type="number" min="3" max="6" value="${h.par}" title="Par"><input data-hole-si="${h.number}" type="number" min="1" max="18" value="${h.si}" title="Stroke index"><button class="btn btn-secondary" data-set-green="${h.number}">GPS</button></div>`).join('')}</div><button class="btn btn-primary" style="width:100%;margin-top:10px" data-action="save-course">Save course</button></div></div>`;render();
+}
+function saveCourse(){const name=document.getElementById('course-name')?.value.trim();if(!name)return toast('Enter a course name');const holes=defaultHoles().map(h=>({...h,par:Number(document.querySelector(`[data-hole-par="${h.number}"]`)?.value||h.par),si:Number(document.querySelector(`[data-hole-si="${h.number}"]`)?.value||h.si),lat:null,lng:null}));const pending=window.__pendingGreens||{};holes.forEach(h=>{if(pending[h.number]){h.lat=pending[h.number].lat;h.lng=pending[h.number].lng}});state.courses.push({id:uid(),name,location:document.getElementById('course-location')?.value.trim()||'',activated:false,isDemo:false,scratchRating:Number(document.getElementById('course-scratch')?.value||parTotal({holes})),slopeRating:Number(document.getElementById('course-slope')?.value||113),pcc:Number(document.getElementById('course-pcc')?.value||0),holes,createdAt:now()});window.__pendingGreens={};modal=null;save();render();toast('Course added. Activate it with a course credit.')}
+function setGreenFromGps(holeNum){if(!navigator.geolocation)return toast('GPS not supported on this device');navigator.geolocation.getCurrentPosition(p=>{window.__pendingGreens=window.__pendingGreens||{};window.__pendingGreens[holeNum]={lat:p.coords.latitude,lng:p.coords.longitude};toast(`Hole ${holeNum} green position saved`)},()=>toast('Could not get GPS position'),{enableHighAccuracy:true,timeout:10000})}
+function activateCourse(id){const c=courseById(id);if(!c||c.activated)return;if(creditsLeft()<=0)return toast('No course credits remaining');c.activated=true;save();render();toast(`${c.name} activated`)}
+function importCourse(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{try{const data=JSON.parse(await input.files[0].text());if(!data.name||!Array.isArray(data.holes)||data.holes.length!==18)throw new Error();state.courses.push({id:uid(),name:data.name,location:data.location||'',activated:false,isDemo:false,scratchRating:Number(data.scratchRating??data.courseRating??72),slopeRating:Number(data.slopeRating??113),pcc:Number(data.pcc??0),holes:data.holes.map((h,i)=>({number:i+1,par:Number(h.par||4),si:Number(h.si||i+1),lat:h.lat??null,lng:h.lng??null})),createdAt:now()});save();render();toast('Course imported')}catch{toast('Invalid course JSON')}};input.click()}
+
+function editPlayersModal(){modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>Edit players</h2><button class="icon-btn" data-action="close-modal">✕</button></div>${state.players.map((p,i)=>`<div class="list-item"><input data-pname="${i}" value="${esc(p.name)}"><input data-phcp="${i}" type="number" min="0" max="54" value="${p.handicap}" style="max-width:90px"></div>`).join('')}<button class="btn btn-primary" style="width:100%;margin-top:12px" data-action="save-players">Save players</button></div></div>`;render()}
+function savePlayers(){state.players=state.players.map((p,i)=>({...p,name:document.querySelector(`[data-pname="${i}"]`).value.trim()||p.name,handicap:Number(document.querySelector(`[data-phcp="${i}"]`).value||0)}));state.players.forEach(p=>{if(p.id==='brad'){state.profile.name=p.name;state.profile.handicap=p.handicap;state.profile.officialHandicap=p.handicap}});modal=null;save();render();toast('Players updated')}
+
+function enableGps(){if(!navigator.geolocation)return toast('GPS not supported');if(gpsWatchId!=null){navigator.geolocation.clearWatch(gpsWatchId);gpsWatchId=null;gpsPosition=null;toast('GPS stopped');render();return}gpsWatchId=navigator.geolocation.watchPosition(p=>{gpsPosition={latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy};render()},()=>toast('GPS permission denied'),{enableHighAccuracy:true,maximumAge:3000,timeout:15000});toast('GPS enabled')}
+
+function render(){
+  let html;
+  switch(state.view){case'play':html=playView();break;case'phantom':html=phantomView();break;case'caddie':html=caddieView();break;case'stats':html=statsView();break;case'mates':html=matesView();break;case'profile':html=profileView();break;default:html=homeView()}
+  document.getElementById('app').innerHTML=html+(modal||'');
+  bind();
+}
+function bind(){
+  document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>setView(b.dataset.nav));
+  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>setView(b.dataset.go));
+  document.querySelectorAll('[data-format]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-format]').forEach(x=>x.classList.remove('active'));b.classList.add('active')});
+  document.querySelectorAll('[data-player-select]').forEach(b=>b.onclick=()=>b.classList.toggle('active'));
+  document.querySelectorAll('[data-score]').forEach(b=>b.onclick=()=>changeScore(b.dataset.score,Number(b.dataset.delta)));
+  document.querySelectorAll('[data-activate-course]').forEach(b=>b.onclick=()=>activateCourse(b.dataset.activateCourse));
+  document.querySelectorAll('[data-phantom]').forEach(b=>b.onclick=()=>{state.activeRound.phantomRoundId=b.dataset.phantom;modal=null;save();render();toast('Phantom enabled')});
+  document.querySelectorAll('[data-set-green]').forEach(b=>b.onclick=()=>setGreenFromGps(Number(b.dataset.setGreen)));
+  document.querySelectorAll('[data-share-round]').forEach(b=>b.onclick=()=>openShareRound(b.dataset.shareRound));
+  document.querySelectorAll('[data-action]').forEach(b=>b.onclick=(e)=>{const a=b.dataset.action;actions[a]?.(e)});
+}
+const actions={
+  'start-round':startRound,'prev-hole':prevHole,'next-hole':nextHole,'finish-round':finishRound,
+  'abandon-round':()=>{if(confirm('Abandon this round?')){state.activeRound=null;save();render()}},
+  'gps':enableGps,'enable-phantom':enablePhantom,'round-caddie':roundCaddie,
+  'close-modal':()=>{modal=null;render()},'new-course':newCourseModal,'save-course':saveCourse,'import-course':importCourse,
+  'edit-players':editPlayersModal,'save-players':savePlayers,
+  'save-profile':()=>{state.profile.name=document.getElementById('profile-name').value.trim()||state.profile.name;state.profile.officialHandicap=Number(document.getElementById('profile-hcp').value||0);state.profile.handicap=Math.round(state.profile.officialHandicap);const p=state.players.find(x=>x.id==='brad');if(p){p.name=state.profile.name;p.handicap=state.profile.handicap}save();toast('Profile saved')},
+  'save-clubs':()=>{state.profile.clubs=state.profile.clubs.map((c,i)=>({name:document.querySelector(`.club-name[data-i="${i}"]`).value.trim()||c.name,carry:Number(document.querySelector(`.club-carry[data-i="${i}"]`).value||0)}));save();toast('Club distances saved')},
+  'add-club':()=>{state.profile.clubs.push({name:'New club',carry:100});save();render()},
+  'caddie-recommend':()=>{const d=Number(document.getElementById('caddie-distance').value||0);document.getElementById('caddie-result').innerHTML=caddieRecommendation(d)},
+  'toggle-gpsplus':()=>{state.gpsPlus=!state.gpsPlus;save();render();toast(state.gpsPlus?'GPS+ demo enabled':'GPS+ demo disabled')},
+  'share-native':shareNative,'save-share-card':saveShareCard,'copy-share-text':copyShareText,
+  'reset-app':()=>{if(confirm('Delete all ParLink V1.2 data on this device?')){localStorage.removeItem(APP_KEY);state=structuredClone(initialState);render();toast('ParLink reset')}},
+  'install':async()=>{if(window.__deferredPrompt){window.__deferredPrompt.prompt();await window.__deferredPrompt.userChoice;window.__deferredPrompt=null}else toast('Use your browser menu → Add to Home screen')}
+};
+
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.__deferredPrompt=e});
+// Service worker disabled in native Android wrapper; assets are bundled offline.
+render();
+
+// Register ParLink service worker for installed/PWA updates.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      for (const reg of regs) await reg.unregister();
+      if ('caches' in window) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map(k => caches.delete(k)));
+      }
+    } catch (_) {}
+  });
+}
+
+  </script>
+</body>
+</html>
