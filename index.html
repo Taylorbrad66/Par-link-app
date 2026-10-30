@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b1412" />
-  <meta name="description" content="ParLink V1.4 - score, compete, track handicap, organise rounds, groups, share and live stats." />
-  <title>ParLink V1.4</title>
+  <meta name="description" content="ParLink V1.4.1 - score, compete, track handicap, organise rounds, groups, share and live stats." />
+  <title>ParLink V1.4.1</title>
   <style>
 :root{
   --bg:#08110f;
@@ -211,7 +211,7 @@ function homeView(){
   const best=bestRound();
   const hcp=estimateHandicap('brad');
   return shell(`
-    <section class="hero"><div class="eyebrow">ParLink V1.4</div><h1>Know your game.<br>Beat your mates.<br>Beat yourself.</h1><p>Score rounds, build your stats, challenge a phantom and get simple club advice without a compulsory subscription.</p></section>
+    <section class="hero"><div class="eyebrow">ParLink V1.4.1</div><h1>Know your game.<br>Beat your mates.<br>Beat yourself.</h1><p>Score rounds, build your stats, challenge a phantom and get simple club advice without a compulsory subscription.</p></section>
     <div class="grid">
       <button class="card" data-go="play"><div class="emoji">⛳</div><h3>Play</h3><p>Stroke, Stableford and Ambrose.</p></button>
       <button class="card" data-go="phantom"><div class="emoji">👻</div><h3>Phantom</h3><p>Play against your best or last round.</p></button>
@@ -229,7 +229,9 @@ function bestSummary(r){const p=r.results?.[0];if(!p)return '—';return r.forma
 function roundCard(r){
   const c=courseById(r.courseId);const lead=r.results?.[0];
   const result=lead?(r.format==='stableford'?lead.points+' pts':(lead.toPar>0?'+':'')+lead.toPar):'Saved';
-  return `<div class="list-item round-history-item"><div><strong>${esc(c?.name||r.courseName||'Course')}</strong><div class="meta">${esc(r.format)} · ${r.players.length} player${r.players.length!==1?'s':''}</div></div><div class="round-actions"><span class="badge ${r.format==='stableford'?'blue':''}">${result}</span><button class="share-mini" data-share-round="${r.id}" aria-label="Share round">↗ Share</button></div></div>`}
+  // Completed rounds store playerIds. Read legacy shapes without rewriting saved data.
+  const playerCount=[r.playerIds,r.players,r.results].find(Array.isArray)?.length??0;
+  return `<div class="list-item round-history-item"><div><strong>${esc(c?.name||r.courseName||'Course')}</strong><div class="meta">${esc(r.format)} · ${playerCount} player${playerCount!==1?'s':''}</div></div><div class="round-actions"><span class="badge ${r.format==='stableford'?'blue':''}">${result}</span><button class="share-mini" data-share-round="${r.id}" aria-label="Share round">↗ Share</button></div></div>`}
 
 function playView(){
   if(state.activeRound){ensureRoundStats(state.activeRound);return roundView()}
@@ -288,7 +290,7 @@ function allCurrentScores(){const r=state.activeRound;return r.playerIds.every(p
 function nextHole(){if(!allCurrentScores()) return toast('Enter a score for each player');state.activeRound.hole=Math.min(18,state.activeRound.hole+1);save();render()}
 function prevHole(){state.activeRound.hole=Math.max(1,state.activeRound.hole-1);save();render()}
 function finishRound(){
-  const r=state.activeRound;if(!allCurrentScores())return toast('Enter a score for each player');
+  const r=state.activeRound;if(!r)return;if(!allCurrentScores())return toast('Enter a score for each player');
   const c=courseById(r.courseId);const beforeEstimate=estimateHandicap('brad').value;
   const results=r.playerIds.map(pid=>{const p=playerById(pid),scores=r.scores[pid].map((s,i)=>s??c.holes[i].par);const gross=scores.reduce((a,b)=>a+b,0);const points=scores.reduce((a,s,i)=>a+stablefordPoints(s,c.holes[i],p.handicap),0);const net=gross-p.handicap;const diff=r.format==='ambrose'?null:scoreDifferential(points,p.handicap,c);return {playerId:pid,name:p.name,gross,net,points,toPar:gross-parTotal(c),handicapUsed:p.handicap,scoreDifferential:diff,statsSummary:summarizeShotStats(r.stats?.[pid]||[])};}).sort((a,b)=>r.format==='stableford'?b.points-a.points:a.net-b.net);
   const completed={...r,courseName:c.name,scratchRating:Number(c.scratchRating??parTotal(c)),slopeRating:Number(c.slopeRating??113),pcc:Number(c.pcc??0),completedAt:now(),results,handicapBefore:beforeEstimate};
@@ -579,3 +581,4 @@ if ('serviceWorker' in navigator) {
   </script>
 </body>
 </html>
+

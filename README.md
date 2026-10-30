@@ -4,7 +4,7 @@ Live app: https://parlink-web-install.vercel.app/
 
 ## Which file to update
 
-**`index.html` is the app.** It contains the current V1.4 HTML, styles and JavaScript.
+**`index.html` is the app.** It contains the current V1.4.1 HTML, styles and JavaScript.
 
 Keep that exact filename, in the top level of this repository. Do not add a version number, an extra full stop or an enclosing folder. Uploading a ZIP only stores that ZIP; it does not replace the app files.
 
@@ -27,6 +27,12 @@ Reload the page to check an update. Do not use **Reset app** or clear website da
 
 ## Current repair
 
+V1.4.1 fixes a crash when finishing a round and when reopening the app afterwards. The completed-round card read `players.length`, but saved rounds use `playerIds`. Home and Stats now read the correct field, with fallbacks for older saved shapes. Existing scores, courses, profiles and the `parlink.v1` storage key are preserved; no reset or data migration is needed. Repeated finish actions after a round is saved are ignored.
+
+Regression checks cover all three formats with one and four players, the round-complete/share screen, Home and Stats, reloads with previously saved V1.4 rounds, participant-count fallbacks, duplicate finishes and an incomplete final hole.
+
+## Previous homepage and GPS repair
+
 The main address returned HTTP 404 because the repository had no `index.html`. The repair makes the V1.4 app the homepage and redirects the old V1.4 address to it, preserving query strings and fragments.
 
 Two GPS/Caddie corrections are included:
@@ -39,4 +45,5 @@ The storage key remains `parlink.v1`. Real-device GPS accuracy and course data s
 ## Regression checks
 
 Run `node --test parlink-regression.cjs` with Node.js 18 or later. These checks exercise the app source with synthetic browser and location inputs; they do not establish real-device GPS accuracy.
+
 
