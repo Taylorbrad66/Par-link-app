@@ -1,5 +1,5 @@
-/* ParLink V1.5.0: the app shell works offline; updates are applied between rounds. */
-const CACHE_NAME = 'parlink-shell-1.5.0';
+/* ParLink V1.5.1: the app shell works offline; updates are applied between rounds. */
+const CACHE_NAME = 'parlink-shell-1.5.1';
 const SHELL_PATHS = ['/', '/index.html', '/index-15.html', '/manifest.webmanifest', '/icon.svg'];
 
 self.addEventListener('install', event => {

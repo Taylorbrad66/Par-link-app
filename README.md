@@ -2,9 +2,9 @@
 
 Live app: https://parlink-web-install.vercel.app/
 
-## Current version: V1.5.0
+## Current version: V1.5.1
 
-V1.5.0 upgrades the V1.4.1 round-finish repair and keeps the same live address and saved-data key. No reset or data migration is required.
+V1.5.1 upgrades the V1.4.1 round-finish repair and keeps the same live address and saved-data key. No reset or data migration is required. The V1.5.1 patch clears the update notice after a worker activates, including on first installation.
 
 - **Real rounds and demo are separate.** Play golf uses your saved, activated courses. Try demo opens the example course. Real courses can be added or imported; location does not download course data.
 - **Clearer scoring.** Larger score controls distinguish an unentered score from par. Finish round checks all 18 holes and returns to any skipped hole without inventing a score.
@@ -47,4 +47,4 @@ Course scorecards and mappings must be added or imported. GPS shows distance to 
 
 Run `node --test parlink-regression.cjs` with Node.js 18 or later.
 
-The 35 checks cover all three scoring formats with one and four players, 18-hole completion, share/Home/Stats rendering, reloads, legacy saved rounds, duplicate finish, missing scores, resume and course snapshots, primary/backup recovery, failed storage writes, backup restore, course validation, GPS safeguards and cached offline navigation. They execute the app source with synthetic DOM, storage and location inputs; they do not establish real-phone GPS accuracy or airplane-mode behavior.
+The 36 checks cover all three scoring formats with one and four players, 18-hole completion, share/Home/Stats rendering, reloads, legacy saved rounds, duplicate finish, missing scores, resume and course snapshots, primary/backup recovery, failed storage writes, backup restore, course validation, GPS safeguards and cached offline navigation. They execute the app source with synthetic DOM, storage and location inputs; they do not establish real-phone GPS accuracy or airplane-mode behavior.

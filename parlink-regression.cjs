@@ -12,6 +12,7 @@ const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 function app(storage = new Map(), options = {}) {
   const elements = new Map();
   const inputs = [];
+  const windowEvents = {};
   const selection = { format: 'stroke', playerIds: ['brad'] };
   function element(id) {
     if (!elements.has(id)) elements.set(id, {
@@ -24,7 +25,7 @@ function app(storage = new Map(), options = {}) {
     structuredClone,
     confirm: () => options.confirm !== false,
     setTimeout() { return 0; },
-    window: { addEventListener() {}, scrollTo() {} },
+    window: { addEventListener(name, callback) { windowEvents[name] = callback; }, scrollTo() {}, location: { reload() {} } },
     document: {
       body: { appendChild() {} },
       createElement(tag) {
@@ -41,7 +42,7 @@ function app(storage = new Map(), options = {}) {
         return selector === '.pill.active' ? selection.playerIds.map(id => ({ dataset: { playerSelect: id } })) : [];
       }
     },
-    navigator: {},
+    navigator: options.navigator || {},
     localStorage: {
       getItem: key => storage.get(key) ?? null,
       setItem(key, value) {
@@ -61,12 +62,12 @@ function app(storage = new Map(), options = {}) {
     run("setView('play')");
     run('startRound()');
   }
-  return { run, value, round, storage, element, inputs };
+  return { run, value, round, storage, element, inputs, windowEvents };
 }
 
-test('homepage starts and renders V1.5.0', () => {
+test('homepage starts and renders V1.5.1', () => {
   const a = app();
-  assert.match(a.element('app').innerHTML, /ParLink V1\.5\.0/);
+  assert.match(a.element('app').innerHTML, /ParLink V1\.5\.1/);
   assert.equal(a.run('APP_KEY'), 'parlink.v1');
 });
 
@@ -439,7 +440,7 @@ test('offline worker serves cached app shell and waits for explicit update activ
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, 'sw.js'), 'utf8'), {
     self: { location: { origin: 'https://parlink.test' }, clients: { claim: async () => {} },
       addEventListener: (name, fn) => { handlers[name] = fn; }, skipWaiting: () => { skipped++; } },
-    caches: { open: async () => cache, keys: async () => ['parlink-shell-1.4.1', 'unrelated-cache', 'parlink-shell-1.5.0'],
+    caches: { open: async () => cache, keys: async () => ['parlink-shell-1.4.1', 'unrelated-cache', 'parlink-shell-1.5.1'],
       delete: async key => { removed.push(key); } },
     Request: class { constructor(url) { this.url = url; } }, URL,
     fetch: async () => { throw new Error('Offline fixture'); }
@@ -459,6 +460,29 @@ test('offline worker serves cached app shell and waits for explicit update activ
   assert.equal(skipped, 1);
   handlers.fetch({ request: { method: 'GET', mode: 'navigate', url: 'https://other.test/' },
     respondWith: () => assert.fail('Third-party requests must not be intercepted') });
+});
+
+test('an activated service worker clears its update notice', async () => {
+  const serviceEvents = {};
+  const registrationEvents = {};
+  let onWorkerChange;
+  const worker = { state: 'installed', addEventListener(name, callback) { onWorkerChange = callback; } };
+  const registration = { waiting: worker, installing: worker,
+    addEventListener(name, callback) { registrationEvents[name] = callback; } };
+  const a = app(new Map(), { navigator: { serviceWorker: {
+    register: async () => registration, ready: Promise.resolve(registration),
+    addEventListener(name, callback) { serviceEvents[name] = callback; }
+  } } });
+  await a.windowEvents.load();
+  assert.match(a.run('saveStatusHtml()'), /Apply update/);
+  registrationEvents.updatefound();
+  worker.state = 'activated';
+  registration.waiting = null;
+  registration.installing = null;
+  onWorkerChange();
+  assert.equal(a.run('waitingWorker'), null);
+  assert.doesNotMatch(a.run('saveStatusHtml()'), /Apply update/);
+  assert.match(a.run('saveStatusHtml()'), /Offline reopening ready/);
 });
 
 

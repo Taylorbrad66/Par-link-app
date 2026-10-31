@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b1412" />
-  <meta name="description" content="ParLink V1.5.0 - score, compete, track handicap, organise rounds, groups, share and live stats." />
+  <meta name="description" content="ParLink V1.5.1 - score, compete, track handicap, organise rounds, groups, share and live stats." />
   <link rel="manifest" href="/manifest.webmanifest">
-  <title>ParLink V1.5.0</title>
+  <title>ParLink V1.5.1</title>
   <style>
 :root{
   --bg:#08110f;
@@ -88,7 +88,7 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script>
 const APP_KEY='parlink.v1';
-const APP_VERSION='1.5.0';
+const APP_VERSION='1.5.1';
 const BACKUP_KEY=APP_KEY+'.backup';
 let storageStatus='new', recoveryNotice='', recoveryBlocked=false;
 let offlineReady=false, waitingWorker=null, applyingUpdate=false;
@@ -274,7 +274,7 @@ function homeView(){
   const best=bestRound();
   const hcp=estimateHandicap('brad');
   return shell(`
-    <section class="hero"><div class="eyebrow">ParLink V1.5.0</div><h1>Know your game.<br>Beat your mates.<br>Beat yourself.</h1><p>Score rounds, build your stats, challenge a phantom and get simple club advice without a compulsory subscription.</p></section>
+    <section class="hero"><div class="eyebrow">ParLink V1.5.1</div><h1>Know your game.<br>Beat your mates.<br>Beat yourself.</h1><p>Score rounds, build your stats, challenge a phantom and get simple club advice without a compulsory subscription.</p></section>
     ${resumeCard()}
     <div class="grid">
       <button class="card" data-go="play"><div class="emoji">⛳</div><h3>Play golf</h3><p>Choose a real course or try the demo.</p></button>
@@ -700,12 +700,13 @@ if('serviceWorker' in navigator){
   window.addEventListener('load',async()=>{
     try{
       const reg=await navigator.serviceWorker.register('/sw.js',{updateViaCache:'none'});
-      const waiting=()=>{if(reg.waiting){waitingWorker=reg.waiting;updateSaveStatus()}};
-      waiting();reg.addEventListener('updatefound',()=>{const worker=reg.installing;worker?.addEventListener('statechange',waiting)});
-      await navigator.serviceWorker.ready;offlineReady=true;updateSaveStatus();
+      const waiting=()=>{waitingWorker=reg.waiting?.state==='installed'?reg.waiting:null;updateSaveStatus()};
+      const installing=()=>{reg.installing?.addEventListener('statechange',waiting)};
+      waiting();reg.addEventListener('updatefound',installing);installing();
+      await navigator.serviceWorker.ready;offlineReady=true;waiting();
     }catch{offlineReady=false;updateSaveStatus()}
   });
-  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(applyingUpdate&&!state.activeRound)window.location.reload()});
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{waitingWorker=null;updateSaveStatus();if(applyingUpdate&&!state.activeRound)window.location.reload()});
 }
   </script>
 </body>
