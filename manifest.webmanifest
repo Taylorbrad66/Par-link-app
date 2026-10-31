@@ -1,0 +1,13 @@
+{
+  "id": "/",
+  "name": "ParLink Golf",
+  "short_name": "ParLink",
+  "description": "Golf scoring, saved rounds and green-centre distances for your mapped courses.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#08110f",
+  "theme_color": "#0b1412",
+  "icons": [{"src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}]
+}
+

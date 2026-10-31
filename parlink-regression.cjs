@@ -9,8 +9,9 @@ const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 
 // Execute the full app with synthetic DOM, storage and location inputs.
 // These tests do not claim to verify browser permissions or real GPS accuracy.
-function app(storage = new Map()) {
+function app(storage = new Map(), options = {}) {
   const elements = new Map();
+  const inputs = [];
   const selection = { format: 'stroke', playerIds: ['brad'] };
   function element(id) {
     if (!elements.has(id)) elements.set(id, {
@@ -21,9 +22,17 @@ function app(storage = new Map()) {
   }
   const context = vm.createContext({
     structuredClone,
+    confirm: () => options.confirm !== false,
     setTimeout() { return 0; },
     window: { addEventListener() {}, scrollTo() {} },
     document: {
+      body: { appendChild() {} },
+      createElement(tag) {
+        assert.equal(tag, 'input');
+        const input = { addEventListener() {}, click() {}, remove() {} };
+        inputs.push(input);
+        return input;
+      },
       getElementById: element,
       querySelector(selector) {
         return selector === '.seg.active' ? { dataset: { format: selection.format } } : null;
@@ -35,7 +44,10 @@ function app(storage = new Map()) {
     navigator: {},
     localStorage: {
       getItem: key => storage.get(key) ?? null,
-      setItem: (key, value) => storage.set(key, String(value)),
+      setItem(key, value) {
+        if (options.failWrite?.(key)) throw new Error('Fixture storage unavailable');
+        storage.set(key, String(value));
+      },
       removeItem: key => storage.delete(key)
     }
   });
@@ -49,18 +61,18 @@ function app(storage = new Map()) {
     run("setView('play')");
     run('startRound()');
   }
-  return { run, value, round, storage, element };
+  return { run, value, round, storage, element, inputs };
 }
 
-test('homepage starts and renders V1.4.1', () => {
+test('homepage starts and renders V1.5.0', () => {
   const a = app();
-  assert.match(a.element('app').innerHTML, /ParLink V1\.4\.1/);
+  assert.match(a.element('app').innerHTML, /ParLink V1\.5\.0/);
   assert.equal(a.run('APP_KEY'), 'parlink.v1');
 });
 
 test('unmapped courses have no centre or nearby-course match', () => {
   const a = app();
-  a.run('gpsPosition={latitude:-35,longitude:150,accuracy:5}');
+  a.run('gpsPosition={latitude:-35,longitude:150,accuracy:5,timestamp:Date.now()}');
   assert.equal(a.run('courseCenter(state.courses[0])'), null);
   assert.equal(a.run('distanceToCourse(state.courses[0])'), null);
   assert.equal(a.run('nearestCourse()'), null);
@@ -80,7 +92,7 @@ test('partial course mapping averages only valid coordinates', () => {
 
 test('invalid green values never produce a distance', () => {
   const a = app();
-  a.run('gpsPosition={latitude:0,longitude:0,accuracy:5}');
+  a.run('gpsPosition={latitude:0,longitude:0,accuracy:5,timestamp:Date.now()}');
   const invalid = [null, undefined, '', ' ', false, [], {}, 'unknown', NaN, Infinity];
   for (const v of invalid) {
     const literal = v === undefined ? 'undefined' : Number.isNaN(v) ? 'NaN' : v === Infinity ? 'Infinity' : JSON.stringify(v);
@@ -93,7 +105,7 @@ test('invalid green values never produce a distance', () => {
 
 test('valid zero coordinates and numeric strings remain supported', () => {
   const a = app();
-  a.run('gpsPosition={latitude:0,longitude:0,accuracy:5}');
+  a.run('gpsPosition={latitude:0,longitude:0,accuracy:5,timestamp:Date.now()}');
   assert.deepEqual(a.value("courseCenter({holes:[{lat:'0',lng:'0'}]})"), { lat: 0, lng: 0 });
   assert.equal(a.run("currentDistance({lat:'0',lng:'0'})"), 0);
   assert.ok(Math.abs(a.run('haversine(0,0,0,1)') - 111195) < 1);
@@ -101,7 +113,7 @@ test('valid zero coordinates and numeric strings remain supported', () => {
 
 test('nearby-course lookup ignores unmapped courses', () => {
   const a = app();
-  a.run(`gpsPosition={latitude:-35,longitude:150,accuracy:5};
+  a.run(`gpsPosition={latitude:-35,longitude:150,accuracy:5,timestamp:Date.now()};
     state.courses.push({id:'mapped',name:'Mapped fixture',activated:true,holes:[{lat:-35,lng:150}]});`);
   assert.equal(a.run('nearestCourse().c.id'), 'mapped');
   assert.equal(a.run('nearestCourse().d'), 0);
@@ -110,14 +122,14 @@ test('nearby-course lookup ignores unmapped courses', () => {
 test('zero-metre round shows zero and no example or carry-club advice', () => {
   const a = app();
   a.round();
-  a.run(`gpsPosition={latitude:-35,longitude:150,accuracy:5};
-    state.courses[0].holes[0].lat=-35;
-    state.courses[0].holes[0].lng=150;
+  a.run(`gpsPosition={latitude:-35,longitude:150,accuracy:5,timestamp:Date.now()};
+    state.activeRound.courseSnapshot.holes[0].lat=-35;
+    state.activeRound.courseSnapshot.holes[0].lng=150;
     roundCaddie();`);
   const modal = a.run('modal');
   assert.match(modal, /club-rec">0 m/);
   assert.doesNotMatch(modal, /135 m|Safe option|normal carry/);
-  assert.match(a.run('roundView()'), /gps-number">0<\/div><div class="gps-label">metres to green/);
+  assert.match(a.run('roundView()'), /gps-number">0<\/div><div class="gps-label">metres to green centre/);
 });
 
 test('missing distance retains the explicitly labelled example', () => {
@@ -131,9 +143,9 @@ test('missing distance retains the explicitly labelled example', () => {
 test('real supplied target and custom club carries drive the advice', () => {
   const a = app();
   a.round();
-  a.run(`gpsPosition={latitude:0,longitude:0,accuracy:5};
-    state.courses[0].holes[0].lat=0;
-    state.courses[0].holes[0].lng=0.001214084432;
+  a.run(`gpsPosition={latitude:0,longitude:0,accuracy:5,timestamp:Date.now()};
+    state.activeRound.courseSnapshot.holes[0].lat=0;
+    state.activeRound.courseSnapshot.holes[0].lng=0.001214084432;
     state.profile.clubs=[{name:'Fixture short',carry:120},{name:'Fixture long',carry:138}];
     roundCaddie();`);
   assert.match(a.run('modal'), /target 135 m/);
@@ -249,4 +261,204 @@ test('round cards handle legacy players, results-only and empty participant data
     assert.match(card, new RegExp(`${count} player${count === 1 ? '' : 's'}<`));
   }
 });
+
+test('real course setup and demo are separate, with no invented real courses', () => {
+  const a = app();
+  a.run("setView('play')");
+  assert.equal(a.run('roundSetup.mode'), 'real');
+  assert.match(a.element('app').innerHTML, /No real courses saved yet/);
+  a.run("chooseMode('demo')");
+  assert.match(a.element('app').innerHTML, /Start demo round/);
+  assert.equal(a.run('state.courses.filter(c=>!c.isDemo).length'), 0);
+});
+
+test('resume retains entered scores and the original course after editing the library', () => {
+  const a = app();
+  a.round();
+  a.run("setParScore('brad');nextHole();state.courses[0].holes[0].par=6;setView('home')");
+  assert.equal(a.storage.get('parlink.v1'), a.storage.get('parlink.v1.backup'));
+  const b = app(a.storage);
+  assert.match(b.element('app').innerHTML, /Resume round/);
+  assert.equal(b.run('state.activeRound.hole'), 2);
+  assert.equal(b.run('state.activeRound.scores.brad[0]'), 4);
+  assert.equal(b.run('roundCourse(state.activeRound).holes[0].par'), 4);
+  assert.equal(b.run('state.courses[0].holes[0].par'), 6);
+});
+
+test('damaged primary storage recovers from backup without discarding the damaged text', () => {
+  const a = app();
+  a.round();
+  a.run("setParScore('brad')");
+  a.storage.set('parlink.v1', '{damaged');
+  const b = app(a.storage);
+  assert.equal(b.run('state.activeRound.scores.brad[0]'), 4);
+  assert.equal(b.storage.get('parlink.v1.damaged'), '{damaged');
+  assert.match(b.element('app').innerHTML, /Recovered your last saved data/);
+});
+
+test('the newer recovery copy wins when primary writes failed', () => {
+  const a = app();
+  a.round();
+  const oldPrimary = a.storage.get('parlink.v1');
+  a.run("setParScore('brad')");
+  a.storage.set('parlink.v1', oldPrimary);
+  assert.equal(app(a.storage).run('state.activeRound.scores.brad[0]'), 4);
+});
+
+test('unreadable storage shows recovery and stays untouched', () => {
+  const storage = new Map([['parlink.v1', '{damaged'], ['parlink.v1.backup', 'null']]);
+  const before = [...storage];
+  const a = app(storage);
+  assert.match(a.element('app').innerHTML, /Your data has been kept/);
+  assert.equal(a.run('save()'), false);
+  assert.deepEqual([...storage], before);
+});
+
+test('one surviving storage copy keeps scores and reports reduced redundancy', () => {
+  const a = app(new Map(), { failWrite: key => key === 'parlink.v1' });
+  a.round();
+  a.run("setParScore('brad')");
+  assert.equal(a.run('storageStatus'), 'single');
+  assert.match(a.run('saveStatusHtml()'), /one copy/);
+  assert.equal(app(a.storage).run('state.activeRound.scores.brad[0]'), 4);
+});
+
+test('failed round completion keeps all scores for retry, then saves exactly once', () => {
+  let unavailable = false;
+  const a = app(new Map(), { failWrite: () => unavailable });
+  a.round();
+  a.run('state.activeRound.scores.brad=roundCourse(state.activeRound).holes.map(h=>h.par);state.activeRound.hole=18;save()');
+  unavailable = true;
+  a.run('finishRound()');
+  assert.equal(a.run('state.rounds.length'), 0);
+  assert.equal(a.run('state.activeRound.scores.brad.length'), 18);
+  assert.match(a.element('toast').textContent, /could not be saved/);
+  unavailable = false;
+  a.run('finishRound();finishRound()');
+  assert.equal(app(a.storage).run('state.rounds.length'), 1);
+});
+
+test('finish sends the player back to a skipped hole without inventing a score', () => {
+  const a = app();
+  a.round();
+  a.run('state.activeRound.scores.brad=roundCourse(state.activeRound).holes.map(h=>h.par);state.activeRound.scores.brad[2]=null;state.activeRound.hole=18;finishRound()');
+  assert.equal(a.run('state.activeRound.hole'), 3);
+  assert.equal(a.run('state.activeRound.scores.brad[2]'), null);
+  assert.equal(a.run('state.rounds.length'), 0);
+  assert.match(a.element('toast').textContent, /Hole 3 needs a score/);
+});
+
+test('real rounds with no reliable distance do not receive demo club advice', () => {
+  const a = app();
+  a.round();
+  a.run('state.activeRound.courseSnapshot.isDemo=false;roundCaddie()');
+  assert.match(a.run('modal'), /No reliable distance/);
+  assert.doesNotMatch(a.run('modal'), /135 m|club-rec/);
+});
+
+test('stale, inaccurate and distant GPS readings suppress yardage', () => {
+  const a = app();
+  for (const expression of [
+    '{latitude:0,longitude:0,accuracy:5,timestamp:Date.now()-31000}',
+    '{latitude:0,longitude:0,accuracy:26,timestamp:Date.now()}',
+    '{latitude:0,longitude:1,accuracy:5,timestamp:Date.now()}'
+  ]) {
+    a.run(`gpsPosition=${expression}`);
+    assert.equal(a.run('currentDistance({lat:0,lng:0})'), null);
+  }
+});
+
+test('course validation rejects duplicate indexes, partial mapping and invalid ratings', () => {
+  const a = app();
+  assert.equal(a.run('validatedCourse(state.courses[0]).holes.length'), 18);
+  for (const mutation of [
+    'c.holes[1].si=c.holes[0].si',
+    'c.holes[0].lat=-35',
+    'c.slopeRating=156',
+    'c.scratchRating=0',
+    'c.holes[0].par=2'
+  ]) assert.throws(() => a.run(`{const c=structuredClone(state.courses[0]);${mutation};validatedCourse(c)}`));
+});
+
+test('updates cannot replace an active round or proceed when data cannot save', () => {
+  let unavailable = false;
+  const a = app(new Map(), { failWrite: () => unavailable });
+  a.round();
+  a.run("window.sent=[];waitingWorker={postMessage:m=>window.sent.push(m)};actions['apply-update']()");
+  assert.equal(a.run('window.sent.length'), 0);
+  a.run('state.activeRound=null');
+  unavailable = true;
+  a.run("actions['apply-update']()");
+  assert.equal(a.run('window.sent.length'), 0);
+  unavailable = false;
+  a.run("actions['apply-update']()");
+  assert.deepEqual(a.value('window.sent'), [{ type: 'SKIP_WAITING' }]);
+});
+
+test('backup restore preserves scores and rejects invalid files without replacing data', async () => {
+  const source = app();
+  source.round();
+  source.run("setParScore('brad');nextHole()");
+  const backup = JSON.stringify({ kind: 'parlink-backup', schemaVersion: 1, state: source.value('state') });
+  const a = app();
+  a.run('restoreBackup()');
+  a.inputs.at(-1).files = [{ text: async () => backup }];
+  await a.inputs.at(-1).onchange();
+  assert.equal(a.run('state.activeRound.hole'), 2);
+  assert.equal(app(a.storage).run('state.activeRound.scores.brad[0]'), 4);
+  const before = a.storage.get('parlink.v1');
+  a.run('restoreBackup()');
+  a.inputs.at(-1).files = [{ text: async () => '{"kind":"parlink-backup","schemaVersion":1,"state":{}}' }];
+  await a.inputs.at(-1).onchange();
+  assert.equal(a.storage.get('parlink.v1'), before);
+  assert.match(a.element('toast').textContent, /Nothing was replaced/);
+});
+
+test('a backup that cannot be saved leaves the current round in memory', async () => {
+  const a = app(new Map(), { failWrite: () => true });
+  a.round();
+  a.run("setParScore('brad')");
+  const before = a.value('state');
+  const backup = JSON.stringify({ kind: 'parlink-backup', schemaVersion: 1, state: app().value('state') });
+  a.run('restoreBackup()');
+  a.inputs.at(-1).files = [{ text: async () => backup }];
+  await a.inputs.at(-1).onchange();
+  assert.deepEqual(a.value('state'), before);
+  assert.match(a.element('toast').textContent, /Existing data has been kept/);
+});
+
+test('offline worker serves cached app shell and waits for explicit update activation', async () => {
+  const handlers = {};
+  const removed = [];
+  let skipped = 0;
+  let installed = [];
+  const cache = {
+    addAll: async requests => { installed = requests.map(r => r.url); },
+    match: async key => key === '/' ? 'cached app' : undefined
+  };
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname, 'sw.js'), 'utf8'), {
+    self: { location: { origin: 'https://parlink.test' }, clients: { claim: async () => {} },
+      addEventListener: (name, fn) => { handlers[name] = fn; }, skipWaiting: () => { skipped++; } },
+    caches: { open: async () => cache, keys: async () => ['parlink-shell-1.4.1', 'unrelated-cache', 'parlink-shell-1.5.0'],
+      delete: async key => { removed.push(key); } },
+    Request: class { constructor(url) { this.url = url; } }, URL,
+    fetch: async () => { throw new Error('Offline fixture'); }
+  });
+  let pending;
+  handlers.install({ waitUntil: promise => { pending = promise; } });
+  await pending;
+  assert.ok(installed.includes('/') && installed.includes('/manifest.webmanifest'));
+  assert.equal(skipped, 0);
+  handlers.activate({ waitUntil: promise => { pending = promise; } });
+  await pending;
+  assert.deepEqual(removed, ['parlink-shell-1.4.1']);
+  handlers.fetch({ request: { method: 'GET', mode: 'navigate', url: 'https://parlink.test/' },
+    respondWith: promise => { pending = promise; } });
+  assert.equal(await pending, 'cached app');
+  handlers.message({ data: { type: 'SKIP_WAITING' } });
+  assert.equal(skipped, 1);
+  handlers.fetch({ request: { method: 'GET', mode: 'navigate', url: 'https://other.test/' },
+    respondWith: () => assert.fail('Third-party requests must not be intercepted') });
+});
+
 

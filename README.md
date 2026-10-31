@@ -2,48 +2,49 @@
 
 Live app: https://parlink-web-install.vercel.app/
 
-## Which file to update
+## Current version: V1.5.0
 
-**`index.html` is the app.** It contains the current V1.4.1 HTML, styles and JavaScript.
+V1.5.0 upgrades the V1.4.1 round-finish repair and keeps the same live address and saved-data key. No reset or data migration is required.
 
-Keep that exact filename, in the top level of this repository. Do not add a version number, an extra full stop or an enclosing folder. Uploading a ZIP only stores that ZIP; it does not replace the app files.
+- **Real rounds and demo are separate.** Play golf uses your saved, activated courses. Try demo opens the example course. Real courses can be added or imported; location does not download course data.
+- **Clearer scoring.** Larger score controls distinguish an unentered score from par. Finish round checks all 18 holes and returns to any skipped hole without inventing a score.
+- **Round recovery.** A resume card, a second local recovery copy and visible save status help protect progress. A failed finish keeps the active round available for retry. Unreadable data opens a recovery screen instead of overwriting it.
+- **Backup and restore.** Download a JSON backup and restore it on another browser or device. Restore validates the file and asks before replacing current device data.
+- **Offline reopening.** A service worker caches the app shell after a successful online visit. Wait for “Offline reopening ready” before relying on it. Updates wait for an explicit Apply update action between rounds.
+- **Course and GPS checks.** Course editing includes tee details, ratings, stroke-index validation and optional green-centre coordinates. GPS distance requires a fresh, sufficiently accurate reading and is suppressed beyond 2 km. Real-round Caddie does not substitute the demo distance when reliable yardage is unavailable.
 
-`index-15.html` redirects existing bookmarks to the main address, so those links receive future updates too. The older `index.html.` file and V1.2 ZIP are legacy copies, not the current homepage.
+The V1.4.1 fix remains included: completed-round cards use `playerIds`, with legacy fallbacks, and repeated finish actions are ignored. Existing scores, courses, profiles and club distances continue to use `parlink.v1`.
+
+## Files to update
+
+Keep these files at the top level of the repository:
+
+- `index.html`: the current app HTML, styles and JavaScript.
+- `sw.js`: versioned offline shell and update handling.
+- `manifest.webmanifest` and `icon.svg`: installation metadata and icon.
+- `index-15.html`: redirect for old bookmarks, preserving query strings and fragments.
+- `parlink-regression.cjs`: automated regression checks.
+
+The older `index.html.` file and V1.2 ZIP are legacy copies, not the current homepage. Uploading a ZIP only stores the ZIP; it does not replace the app files.
 
 ## Update through GitHub
 
-1. Open `index.html` and choose **Edit this file**, or use **Add file → Upload files** to replace it with an updated file named exactly `index.html`.
-2. Review the changes. Save a clear commit message explaining the update.
-3. Commit to `main` to publish through the connected Vercel project, `parlink-web-install`. Use a separate branch and preview first for larger changes.
-4. Wait for Vercel to report the new deployment as **Ready**, then open the main app address and check the update.
+1. Update the app and related assets together. For a new release, change the version displayed by the app and the service-worker cache name together.
+2. Run `node --test parlink-regression.cjs` and review the changes. Use a separate branch and preview first for larger changes.
+3. Commit to `main` to publish through the connected Vercel project, `parlink-web-install`.
+4. Wait for Vercel to report the deployment as **Ready**, then open the main app address and check the new version and round flow.
+5. Existing V1.5+ installations show **Apply update** when a replacement worker is ready. Finish the current round and apply the update from the app.
 
-Use the main app address for bookmarks and home-screen shortcuts.
+Use the main address for bookmarks and home-screen shortcuts. Reload to check an update. Do not use Reset app or clear website data to force an update.
 
-## Saved golf data
+## Saved golf data and limits
 
-The app uses browser local storage under `parlink.v1`. This homepage repair keeps the same domain and storage key. Saved data belongs to that browser/device; it is not automatically transferred between browsers or devices.
+Data is stored locally in the browser/device under `parlink.v1`, with a recovery copy under `parlink.v1.backup`. Both copies share the browser's storage limits and can be removed by clearing site data. Download a backup for a separate copy or to transfer between devices. There is no cloud account or automatic multi-phone synchronization.
 
-Reload the page to check an update. Do not use **Reset app** or clear website data to force an update, because those actions can remove saved rounds and settings.
+Course scorecards and mappings must be added or imported. GPS shows distance to the saved green centre, not the current pin position. Course data and phone GPS accuracy still need an on-course check. ParLink handicap is an app estimate, not an official handicap service.
 
-## Current repair
+## Validation
 
-V1.4.1 fixes a crash when finishing a round and when reopening the app afterwards. The completed-round card read `players.length`, but saved rounds use `playerIds`. Home and Stats now read the correct field, with fallbacks for older saved shapes. Existing scores, courses, profiles and the `parlink.v1` storage key are preserved; no reset or data migration is needed. Repeated finish actions after a round is saved are ignored.
+Run `node --test parlink-regression.cjs` with Node.js 18 or later.
 
-Regression checks cover all three formats with one and four players, the round-complete/share screen, Home and Stats, reloads with previously saved V1.4 rounds, participant-count fallbacks, duplicate finishes and an incomplete final hole.
-
-## Previous homepage and GPS repair
-
-The main address returned HTTP 404 because the repository had no `index.html`. The repair makes the V1.4 app the homepage and redirects the old V1.4 address to it, preserving query strings and fragments.
-
-Two GPS/Caddie corrections are included:
-
-- Missing, blank, non-numeric or out-of-range green coordinates are excluded from course-centre and distance calculations. Valid zero coordinates remain supported.
-- A zero-metre target stays at zero instead of becoming the 135-metre example. The GPS label remains accurate, and Caddie does not suggest a carry club at zero metres. The labelled example remains available when no GPS/green distance exists.
-
-The storage key remains `parlink.v1`. Real-device GPS accuracy and course data still need on-course validation.
-
-## Regression checks
-
-Run `node --test parlink-regression.cjs` with Node.js 18 or later. These checks exercise the app source with synthetic browser and location inputs; they do not establish real-device GPS accuracy.
-
-
+The 35 checks cover all three scoring formats with one and four players, 18-hole completion, share/Home/Stats rendering, reloads, legacy saved rounds, duplicate finish, missing scores, resume and course snapshots, primary/backup recovery, failed storage writes, backup restore, course validation, GPS safeguards and cached offline navigation. They execute the app source with synthetic DOM, storage and location inputs; they do not establish real-phone GPS accuracy or airplane-mode behavior.

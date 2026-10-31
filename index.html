@@ -4,8 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b1412" />
-  <meta name="description" content="ParLink V1.4.1 - score, compete, track handicap, organise rounds, groups, share and live stats." />
-  <title>ParLink V1.4.1</title>
+  <meta name="description" content="ParLink V1.5.0 - score, compete, track handicap, organise rounds, groups, share and live stats." />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <title>ParLink V1.5.0</title>
   <style>
 :root{
   --bg:#08110f;
@@ -73,10 +74,13 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 .avatar{overflow:hidden;flex:0 0 auto}.avatar img{width:100%;height:100%;object-fit:cover;display:block}.avatar-lg{width:76px;height:76px;border-radius:50%;background:var(--panel2);display:grid;place-items:center;overflow:hidden;border:2px solid rgba(105,228,159,.35);font-size:1.25rem;font-weight:900;color:var(--green)}.avatar-lg img{width:100%;height:100%;object-fit:cover}.profile-photo-row{display:flex;align-items:center;gap:14px;margin-bottom:16px}.photo-actions{display:flex;gap:8px;flex-wrap:wrap}.photo-btn{padding:8px 10px;font-size:.8rem}.privacy-note{display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:.8rem;line-height:1.35;margin-top:8px}.location-card{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:13px;margin-bottom:14px}.location-state{display:flex;gap:10px;align-items:center}.location-dot{width:10px;height:10px;border-radius:50%;background:var(--muted);box-shadow:0 0 0 5px rgba(168,183,177,.08)}.location-dot.on{background:var(--green);box-shadow:0 0 0 5px rgba(105,228,159,.1)}.live-board{border:1px solid rgba(105,228,159,.25);background:linear-gradient(160deg,rgba(105,228,159,.07),rgba(8,17,15,.2)),var(--panel);border-radius:18px;padding:14px}.live-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.live-badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:900;color:var(--green)}.live-badge:before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green)}.leader-row{display:grid;grid-template-columns:28px 36px 1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(38,58,52,.65)}.leader-row:last-child{border-bottom:0}.leader-pos{font-weight:900;color:var(--muted)}.leader-score{font-weight:900}.stat-chip{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:4px 8px;font-size:.7rem;font-weight:800;margin-top:5px}.stat-chip.has{color:var(--green);border-color:rgba(105,228,159,.35);background:rgba(105,228,159,.07)}.stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.stat-summary .kpi{padding:10px}.stat-summary .value{font-size:1.1rem}.round-recap{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:13px;margin:12px 0}.round-recap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}.round-recap-grid div{background:#0a1512;border-radius:12px;padding:9px}.round-recap-grid b{display:block;font-size:1.05rem}.round-recap-grid span{font-size:.7rem;color:var(--muted)}.player-edit-row{display:grid;grid-template-columns:auto 1fr 86px;gap:9px;align-items:center}.player-edit-fields{min-width:0}.photo-label{font-size:.7rem;color:var(--green);font-weight:800;margin-top:3px}.kpis.four{grid-template-columns:repeat(4,1fr)}
 @media (max-width:480px){.handicap-card{grid-template-columns:1fr}.course-rating-grid{grid-template-columns:1fr 1fr}.course-rating-grid .field:last-child{grid-column:1/-1}}
 
-/* V1.4 organise rounds, groups and social profile */
+/* V1.5 organise rounds, groups and social profile */
 .social-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.social-kpis .kpi{padding:12px}.round-plan{border:1px solid rgba(105,228,159,.22);background:linear-gradient(150deg,rgba(105,228,159,.06),transparent 55%),var(--panel);border-radius:18px;padding:14px}.round-plan-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.round-plan h3{margin:0 0 4px;font-size:1rem}.round-plan .when{color:var(--green);font-weight:850}.round-plan .meta-line{color:var(--muted);font-size:.82rem;margin-top:3px}.people-stack{display:flex;align-items:center;margin-top:10px}.people-stack .avatar{margin-left:-7px;border:2px solid var(--panel);box-shadow:0 0 0 1px rgba(105,228,159,.15)}.people-stack .avatar:first-child{margin-left:0}.round-plan-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.mini-btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:8px 10px;font-size:.78rem;font-weight:800}.group-card{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:13px}.group-members{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:7px}.status-going{color:var(--green)}.status-maybe{color:var(--amber)}.status-declined{color:#ffaaaa}.invite-grid{display:grid;grid-template-columns:1fr;gap:8px}.invite-row{display:grid;grid-template-columns:38px 1fr minmax(112px,.6fr);gap:9px;align-items:center;border:1px solid var(--line);border-radius:13px;padding:8px;background:#0a1512}.day-pills{display:flex;gap:7px;flex-wrap:wrap}.day-pill{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:7px 9px;font-size:.8rem}.day-pill input{accent-color:var(--green)}.privacy-box{border:1px solid rgba(121,169,255,.25);background:rgba(121,169,255,.07);border-radius:15px;padding:12px;color:#dce8ff;font-size:.83rem;line-height:1.4}.social-profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.switch-line{display:flex;align-items:flex-start;gap:9px;margin:10px 0;color:var(--muted);font-size:.84rem}.switch-line input{width:18px;height:18px;accent-color:var(--green);margin-top:1px}.badge.gray{background:rgba(168,183,177,.08);color:var(--muted);border-color:rgba(168,183,177,.18)}
 @media (max-width:520px){.social-kpis{grid-template-columns:1fr 1fr}.social-profile-grid{grid-template-columns:1fr}.invite-row{grid-template-columns:38px 1fr}.invite-row select{grid-column:2}.round-plan-head{flex-direction:column}}
 
+
+/* V1.5 round protection and clear course setup */
+.save-status{font-size:.8rem;color:var(--muted);line-height:1.5;margin:0 0 14px}.save-status .callout{margin:8px 0}.save-status button{margin-top:8px}.resume-card{margin-top:14px}.mode-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}.mode-picker button[aria-pressed="true"]{background:var(--green);color:#082016;border-color:var(--green)}.course-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.course-details{margin:8px 0 16px;font-size:.85rem;line-height:1.5;color:var(--muted)}.gps-box{color:var(--text);max-width:155px}.gps-note{font-size:.75rem;line-height:1.35;max-width:155px;margin-top:6px;color:var(--muted)}.stepper button{min-width:44px;min-height:44px}.stepper .score-value{min-width:50px;font-size:1.1rem;color:var(--green)}.stepper small{display:block;font-size:.6rem}.mapping-hole{border:1px solid var(--line);border-radius:12px;margin:8px 0;padding:10px}.mapping-hole summary{font-weight:800;cursor:pointer}.mapping-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.mapping-fields .field{margin:0}.gps-feedback{color:var(--muted);font-size:.8rem;margin-top:8px}.course-list-item{align-items:flex-start;flex-wrap:wrap}.course-list-item>div{min-width:0}.course-list-item strong{overflow-wrap:anywhere}button:focus-visible,summary:focus-visible{outline:2px solid var(--green);outline-offset:3px}.backup-actions{margin-top:12px}.setup-help{line-height:1.5;color:var(--muted);font-size:.85rem}.gps-readiness{margin:8px 0}.round-head .eyebrow{overflow-wrap:anywhere}@media(max-width:390px){.score-row{gap:6px;padding:10px}.score-main{gap:7px}.stepper{gap:4px}.score-main .avatar{width:30px;height:30px}.gps-box{min-width:100px}.mode-picker .btn{padding:12px 8px}}
   </style>
 </head>
 <body>
@@ -84,7 +88,11 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script>
 const APP_KEY='parlink.v1';
-const APP_VERSION='1.4';
+const APP_VERSION='1.5.0';
+const BACKUP_KEY=APP_KEY+'.backup';
+let storageStatus='new', recoveryNotice='', recoveryBlocked=false;
+let offlineReady=false, waitingWorker=null, applyingUpdate=false;
+let roundSetup={mode:'real',courseId:'',format:'stroke',playerIds:['brad']};
 const now=()=>new Date().toISOString();
 const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);
 const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
@@ -109,8 +117,30 @@ let modal=null;
 let gpsWatchId=null;
 let gpsPosition=null;
 
+function validSavedState(v){
+  if(!v||typeof v!=='object'||Array.isArray(v)||!v.profile||typeof v.profile!=='object')return false;
+  if(!Array.isArray(v.players)||!v.players.length||!v.players.every(p=>p&&typeof p.id==='string'&&typeof p.name==='string'))return false;
+  if(!Array.isArray(v.courses)||!v.courses.every(c=>c&&typeof c.id==='string'&&typeof c.name==='string'&&Array.isArray(c.holes)&&c.holes.length===18&&c.holes.every(h=>h&&Number.isFinite(Number(h.par)))))return false;
+  if(!Array.isArray(v.rounds)||!v.rounds.every(r=>r&&typeof r==='object'&&(!r.results||Array.isArray(r.results))))return false;
+  if(v.profile.clubs&&!Array.isArray(v.profile.clubs))return false;
+  const r=v.activeRound;
+  if(r&&(!Array.isArray(r.playerIds)||!r.playerIds.length||!r.scores||!Number.isInteger(r.hole)||r.hole<1||r.hole>18||!r.playerIds.every(id=>Array.isArray(r.scores[id]))))return false;
+  return true;
+}
+function readStored(key){try{return localStorage.getItem(key)}catch{return null}}
+function decodeState(raw){try{const v=JSON.parse(raw);return validSavedState(v)?v:null}catch{return null}}
 function load(){
-  try{const v=JSON.parse(localStorage.getItem(APP_KEY));return v?mergeDefaults(v):structuredClone(initialState)}catch{return structuredClone(initialState)}
+  const primary=readStored(APP_KEY), backup=readStored(BACKUP_KEY);
+  const a=decodeState(primary), b=decodeState(backup);
+  const useBackup=b&&(!a||String(b.savedAt||'')>String(a.savedAt||''));
+  const chosen=useBackup?b:a;
+  if(chosen){
+    storageStatus='saved';
+    if(useBackup){recoveryNotice='Recovered your last saved data from the recovery copy on this phone.';if(primary&&!a){try{localStorage.setItem(APP_KEY+'.damaged',primary)}catch{}}}
+    return mergeDefaults(chosen);
+  }
+  if(primary!==null||backup!==null){recoveryBlocked=true;storageStatus='failed';recoveryNotice='Your saved data could not be read. It has been kept untouched.';}
+  return structuredClone(initialState);
 }
 function mergeDefaults(v){
   const merged={...structuredClone(initialState),...v,profile:{...initialState.profile,...(v.profile||{})},players:v.players?.length?v.players:structuredClone(initialState.players),courses:v.courses?.length?v.courses:structuredClone(initialState.courses),rounds:v.rounds||[],groups:Array.isArray(v.groups)?v.groups:structuredClone(initialState.groups),openRounds:Array.isArray(v.openRounds)?v.openRounds:[]};
@@ -123,13 +153,46 @@ function mergeDefaults(v){
 }
 function parTotalSafe(course){return (course?.holes||[]).reduce((a,h)=>a+Number(h.par||0),0)||72}
 
-function save(){localStorage.setItem(APP_KEY,JSON.stringify(state))}
+function save(){
+  if(recoveryBlocked)return false;
+  state.savedAt=new Date(Math.max(Date.now(), (Date.parse(state.savedAt)||0)+1)).toISOString();
+  let raw;try{raw=JSON.stringify(state)}catch{storageStatus='failed';updateSaveStatus();return false}
+  let copies=0;
+  for(const key of [APP_KEY,BACKUP_KEY]){try{localStorage.setItem(key,raw);copies++}catch{}}
+  storageStatus=copies===2?'saved':copies===1?'single':'failed';
+  updateSaveStatus();return copies>0;
+}
+function saveStatusHtml(){
+  const saved=storageStatus==='saved'||storageStatus==='single';
+  const offline=offlineReady?'Offline reopening ready':'Open online before leaving to prepare offline reopening';
+  const text=storageStatus==='failed'?'Changes are not saved. Keep this page open and download a backup.':saved?'Saved on this phone'+(storageStatus==='single'?' (one copy)':''):'Scores will save on this phone';
+  return `<div class="${storageStatus==='failed'?'callout danger':''}"><strong>${text}</strong><br>${offline}${typeof navigator!=='undefined'&&navigator.onLine===false?' · You are offline':''}${storageStatus==='failed'?'<div class="btn-row"><button class="btn btn-secondary" data-action="retry-save">Try saving again</button><button class="btn btn-secondary" data-action="export-backup">Download backup</button></div>':''}</div>${recoveryNotice?`<div class="callout warning">${esc(recoveryNotice)}</div>`:''}${waitingWorker?`<div class="callout">An update is ready. ${state.activeRound?'It can be applied after your round.':'<button class="btn btn-secondary" data-action="apply-update">Apply update</button>'}</div>`:''}`;
+}
+function updateSaveStatus(){const el=document.getElementById('save-status');if(el){el.innerHTML=saveStatusHtml();el.querySelectorAll?.('[data-action]').forEach(b=>b.onclick=e=>actions[b.dataset.action]?.(e))}}
+function downloadJson(data,name){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function exportBackup(){downloadJson({kind:'parlink-backup',schemaVersion:1,appVersion:APP_VERSION,exportedAt:now(),state},'ParLink-backup-'+now().slice(0,10)+'.json')}
+function exportRecovery(){downloadJson({kind:'parlink-recovery',exportedAt:now(),primary:readStored(APP_KEY),backup:readStored(BACKUP_KEY)},'ParLink-recovery-'+now().slice(0,10)+'.json')}
+function showFilePicker(input){input.hidden=true;document.body.appendChild(input);input.addEventListener('change',()=>setTimeout(()=>input.remove(),0),{once:true});input.addEventListener('cancel',()=>input.remove(),{once:true});input.click()}
+function restoreBackup(){
+  const input=document.createElement('input');input.type='file';input.accept='.json,application/json';
+  input.onchange=async()=>{const file=input.files?.[0];if(!file)return;try{
+    const data=JSON.parse(await file.text());
+    if(data.kind!=='parlink-backup'||data.schemaVersion!==1||!validSavedState(data.state))throw new Error('Invalid backup');
+    if(!confirm('Restore this backup? It will replace the ParLink data on this device, including any current round. Download your current backup first if you need to keep it.'))return;
+    const previous=state,wasBlocked=recoveryBlocked;state=mergeDefaults(data.state);state.view='home';recoveryBlocked=false;
+    if(!save()){state=previous;recoveryBlocked=wasBlocked;render();return toast('Backup could not be saved. Existing data has been kept.')}
+    recoveryNotice='Backup restored on this phone.';modal=null;stopGps();render();
+  }catch{toast('This is not a valid ParLink backup. Nothing was replaced.')}};showFilePicker(input);
+}
+function recoveryView(){return shell(`<section class="callout warning"><h2>Your data has been kept</h2><p>ParLink could not safely open the saved data. Download a recovery file before making changes, or restore a backup you previously downloaded.</p><div class="btn-row"><button class="btn btn-primary" data-action="export-recovery">Download recovery file</button><button class="btn btn-secondary" data-action="restore-backup">Restore backup</button><button class="btn btn-secondary" data-action="reload-app">Try reopening</button></div></section>`,'Recovery')}
+function resumeCard(){const r=state.activeRound;if(!r)return '';return `<section class="callout resume-card"><strong>Round in progress</strong><p>${esc(courseById(r.courseId)?.name||'Saved course')} · Hole ${r.hole} of 18</p><button class="btn btn-primary" data-nav="play">Resume round</button></section>`}
 function setView(v){state.view=v;save();render();window.scrollTo({top:0,behavior:'smooth'})}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
 function initials(name){return name.split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase()}
 function fmtDate(s){return new Date(s).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})}
-function courseById(id){return state.courses.find(c=>c.id===id)}
-function playerById(id){return state.players.find(p=>p.id===id)}
+function courseById(id){return state.courses.find(c=>c.id===id)||(state.activeRound?.courseId===id?state.activeRound.courseSnapshot:null)}
+function roundCourse(r){return r?.courseSnapshot||courseById(r?.courseId)}
+function playerById(id){return state.players.find(p=>p.id===id)||state.activeRound?.playerSnapshots?.find(p=>p.id===id)||{id,name:'Saved player',handicap:0}}
 function avatarHtml(player,size=''){const p=typeof player==='string'?playerById(player):player;const cls=size==='lg'?'avatar-lg':'avatar';if(p?.photo)return `<div class="${cls}"><img src="${p.photo}" alt="${esc(p.name)}"></div>`;return `<div class="${cls}">${initials(p?.name||'?')}</div>`}
 function defaultShotStat(){return {fairway:'na',gir:false,putts:null,chips:0,sand:0,penalties:0}}
 function ensureRoundStats(r){if(!r)return;r.stats=r.stats||{};(r.playerIds||[]).forEach(pid=>{if(!Array.isArray(r.stats[pid]))r.stats[pid]=Array.from({length:18},()=>defaultShotStat());while(r.stats[pid].length<18)r.stats[pid].push(defaultShotStat());r.stats[pid]=r.stats[pid].map(x=>({...defaultShotStat(),...(x||{})}))})}
@@ -139,8 +202,8 @@ function statsRecorded(stat){return stat&&(stat.fairway!=='na'||stat.gir||stat.p
 function isCoordinate(value,limit){return (typeof value==='number'||typeof value==='string')&&String(value).trim()!==''&&Number.isFinite(Number(value))&&Math.abs(Number(value))<=limit}
 function hasGreenCoordinates(h){return !!h&&isCoordinate(h.lat,90)&&isCoordinate(h.lng,180)}
 function courseCenter(c){const pts=(c?.holes||[]).filter(hasGreenCoordinates);if(!pts.length)return null;return {lat:pts.reduce((a,h)=>a+Number(h.lat),0)/pts.length,lng:pts.reduce((a,h)=>a+Number(h.lng),0)/pts.length}}
-function distanceToCourse(c){if(!gpsPosition)return null;const ctr=courseCenter(c);return ctr?Math.round(haversine(gpsPosition.latitude,gpsPosition.longitude,ctr.lat,ctr.lng)):null}
-function nearestCourse(){if(!gpsPosition)return null;return activeCourses().map(c=>({c,d:distanceToCourse(c)})).filter(x=>x.d!=null).sort((a,b)=>a.d-b.d)[0]||null}
+function distanceToCourse(c){if(!gpsQuality().ok)return null;const ctr=courseCenter(c);return ctr?Math.round(haversine(gpsPosition.latitude,gpsPosition.longitude,ctr.lat,ctr.lng)):null}
+function nearestCourse(){if(!gpsQuality().ok)return null;return activeCourses().filter(c=>!c.isDemo).map(c=>({c,d:distanceToCourse(c)})).filter(x=>x.d!=null).sort((a,b)=>a.d-b.d)[0]||null}
 function activeCourses(){return state.courses.filter(c=>c.activated||c.isDemo)}
 function activatedPaidCount(){return state.courses.filter(c=>c.activated&&!c.isDemo).length}
 function creditsLeft(){return Math.max(0,(state.profile.courseCredits||2)-activatedPaidCount())}
@@ -204,25 +267,26 @@ function nav(){
 function header(title='ParLink'){
   return `<header class="header"><div class="brand"><div class="brand-mark">PL</div><div>${esc(title)}</div></div><div class="header-actions"><button class="icon-btn" data-action="install">＋</button></div></header>`;
 }
-function shell(content,title='ParLink'){return `<main class="shell">${header(title)}${content}</main>${nav()}`}
+function shell(content,title='ParLink'){return `<main class="shell">${header(title)}<div id="save-status" class="save-status" role="status">${saveStatusHtml()}</div>${content}</main>${nav()}`}
 
 function homeView(){
   const last=state.rounds.at(-1);
   const best=bestRound();
   const hcp=estimateHandicap('brad');
   return shell(`
-    <section class="hero"><div class="eyebrow">ParLink V1.4.1</div><h1>Know your game.<br>Beat your mates.<br>Beat yourself.</h1><p>Score rounds, build your stats, challenge a phantom and get simple club advice without a compulsory subscription.</p></section>
+    <section class="hero"><div class="eyebrow">ParLink V1.5.0</div><h1>Know your game.<br>Beat your mates.<br>Beat yourself.</h1><p>Score rounds, build your stats, challenge a phantom and get simple club advice without a compulsory subscription.</p></section>
+    ${resumeCard()}
     <div class="grid">
-      <button class="card" data-go="play"><div class="emoji">⛳</div><h3>Play</h3><p>Stroke, Stableford and Ambrose.</p></button>
+      <button class="card" data-go="play"><div class="emoji">⛳</div><h3>Play golf</h3><p>Choose a real course or try the demo.</p></button>
       <button class="card" data-go="phantom"><div class="emoji">👻</div><h3>Phantom</h3><p>Play against your best or last round.</p></button>
       <button class="card" data-go="mates"><div class="emoji">🏆</div><h3>Compete</h3><p>Mates, winners and round history.</p></button>
       <button class="card" data-go="caddie"><div class="emoji">🧠</div><h3>Caddie</h3><p>Club advice from your own carry numbers.</p></button>
     </div>
     <section class="section"><div class="section-title"><h2>Your ParLink</h2><span>${creditsLeft()} course credits left</span></div>
-      <div class="kpis"><div class="kpi"><div class="value">${state.rounds.length}</div><div class="label">Rounds</div></div><div class="kpi"><div class="value">${activeCourses().length}</div><div class="label">Courses</div></div><div class="kpi"><div class="value">${best?bestSummary(best):'—'}</div><div class="label">Best</div></div><div class="kpi"><div class="value">${hcp.value??'—'}</div><div class="label">ParLink HCP</div></div></div>
+      <div class="kpis"><div class="kpi"><div class="value">${state.rounds.length}</div><div class="label">Rounds</div></div><div class="kpi"><div class="value">${state.courses.filter(c=>!c.isDemo&&c.activated).length}</div><div class="label">Real courses</div></div><div class="kpi"><div class="value">${best?bestSummary(best):'—'}</div><div class="label">Best</div></div><div class="kpi"><div class="value">${hcp.value??'—'}</div><div class="label">ParLink HCP</div></div></div>
     </section>
     ${last?`<section class="section"><div class="section-title"><h2>Last round</h2><span>${fmtDate(last.completedAt)}</span></div>${roundCard(last)}</section>`:''}
-    <section class="section"><div class="callout"><strong>V1 runs locally.</strong> Your rounds, courses and player data stay on this device. No Lovable account or paid backend is required.</div></section>
+    <section class="section"><div class="callout"><strong>Your golf, saved on this phone.</strong> Scores save after every change, with a second recovery copy when storage is available. Download a backup in Profile to keep a copy outside this browser. Cloud backup is not connected.</div></section>
   `);
 }
 function bestSummary(r){const p=r.results?.[0];if(!p)return '—';return r.format==='stableford'?`${p.points} pts`:`${p.toPar>0?'+':''}${p.toPar}`}
@@ -233,43 +297,50 @@ function roundCard(r){
   const playerCount=[r.playerIds,r.players,r.results].find(Array.isArray)?.length??0;
   return `<div class="list-item round-history-item"><div><strong>${esc(c?.name||r.courseName||'Course')}</strong><div class="meta">${esc(r.format)} · ${playerCount} player${playerCount!==1?'s':''}</div></div><div class="round-actions"><span class="badge ${r.format==='stableford'?'blue':''}">${result}</span><button class="share-mini" data-share-round="${r.id}" aria-label="Share round">↗ Share</button></div></div>`}
 
+function mappingCount(c){return (c?.holes||[]).filter(hasGreenCoordinates).length}
+function mappingLabel(c){const n=mappingCount(c);return c?.isDemo?'Demo only':n===18?'18/18 green centres mapped':n?`${n}/18 green centres mapped`:'Scorecard only · no GPS mapping'}
+function setupCourses(){return state.courses.filter(c=>roundSetup.mode==='demo'?c.isDemo:!c.isDemo)}
+function chooseMode(mode){roundSetup.mode=mode;roundSetup.courseId='';render()}
 function playView(){
   if(state.activeRound){ensureRoundStats(state.activeRound);return roundView()}
-  const near=nearestCourse();
+  const courses=setupCourses();
+  if(!courses.some(c=>c.id===roundSetup.courseId))roundSetup.courseId=courses.find(c=>c.activated)?.id||courses[0]?.id||'';
+  const selected=courseById(roundSetup.courseId), near=nearestCourse();
+  const count=state.courses.filter(c=>!c.isDemo&&c.activated).length;
   return shell(`
-    <div class="section-title"><h2>Start a round</h2><span>${activeCourses().length} available courses</span></div>
-    <div class="location-card"><div class="location-state"><span class="location-dot ${gpsPosition?'on':''}"></span><div><strong>${gpsPosition?'Location ready':'Location optional'}</strong><div class="meta">${gpsPosition?(near?`${esc(near.c.name)} about ${near.d<1000?near.d+' m':(near.d/1000).toFixed(1)+' km'} away`:`Accuracy about ${Math.round(gpsPosition.accuracy||0)} m`):'Used only to find nearby saved courses and GPS distances.'}</div></div></div><button class="btn btn-secondary" data-action="locate-course">${gpsPosition?'Refresh':'Use my location'}</button></div>
-    <div class="privacy-note"><span>🔒</span><span>ParLink does not save your exact current coordinates to your profile. Location is requested when you choose to use GPS features.</span></div>
-    <div class="form-card" style="margin-top:14px">
-      <div class="field"><label>Course</label><select id="round-course">${activeCourses().map(c=>{const d=distanceToCourse(c);return `<option value="${c.id}" ${near?.c.id===c.id?'selected':''}>${esc(c.name)}${c.isDemo?' · demo':''}${d!=null?` · ${d<1000?d+' m':(d/1000).toFixed(1)+' km'}`:''}</option>`}).join('')}</select></div>
-      <div class="field"><label>Format</label><div class="segmented" id="format-tabs">${['stroke','stableford','ambrose'].map((f,i)=>`<button class="seg ${i===0?'active':''}" data-format="${f}">${f[0].toUpperCase()+f.slice(1)}</button>`).join('')}</div></div>
-      <div class="field"><label>Players</label><div class="player-pills">${state.players.map((p,i)=>`<button class="pill ${i===0?'active':''}" data-player-select="${p.id}" style="display:inline-flex;align-items:center;gap:7px">${avatarHtml(p)}<span>${esc(p.name)} · ${p.handicap}</span></button>`).join('')}</div></div>
-      <button class="btn btn-primary" style="width:100%" data-action="start-round">Start round</button>
-    </div>
-    <section class="section"><div class="section-title"><h2>Course library</h2><span>${creditsLeft()} of ${state.profile.courseCredits} credits unused</span></div>
-      <div class="btn-row"><button class="btn btn-secondary" data-action="new-course">＋ Add course</button><button class="btn btn-secondary" data-action="import-course">Import JSON</button></div>
-      <div class="list" style="margin-top:10px">${state.courses.map(courseCard).join('')}</div>
-    </section>
+    <div class="section-title"><h2>Start a round</h2><span>${count} real course${count===1?'':'s'} ready</span></div>
+    <div class="mode-picker" role="group" aria-label="Round type"><button class="btn btn-secondary" data-round-mode="real" aria-pressed="${roundSetup.mode==='real'}">⛳ Play golf</button><button class="btn btn-secondary" data-round-mode="demo" aria-pressed="${roundSetup.mode==='demo'}">Try demo</button></div>
+    ${roundSetup.mode==='demo'?'<div class="callout warning" style="margin-bottom:14px"><strong>Demo round.</strong> This is a practice scorecard, not a mapped real course.</div>':''}
+    ${courses.length?`<div class="form-card">
+      <div class="field"><label for="round-course">Course</label><select id="round-course">${courses.map(c=>`<option value="${esc(c.id)}" ${c.id===roundSetup.courseId?'selected':''}>${esc(c.name)}${c.teeName?' · '+esc(c.teeName):''}${!c.activated&&!c.isDemo?' · activate to play':''}</option>`).join('')}</select></div>
+      <div class="course-details"><strong>${esc(mappingLabel(selected))}</strong>${selected&&!selected.isDemo?`<br>${mappingCount(selected)?'Coordinates supplied; on-course accuracy still needs checking. Distances are to the green centre, not today’s pin.':'You can score a round now. Add green-centre coordinates to use GPS distances.'}`:''}${selected&&!selected.activated&&!selected.isDemo?`<div class="course-tools"><button class="btn btn-primary" data-activate-course="${esc(selected.id)}" ${creditsLeft()<=0?'disabled':''}>Activate course · 1 credit</button><span>${creditsLeft()} credits available</span></div>`:''}</div>
+      <div class="field"><label>Format</label><div class="segmented" id="format-tabs">${['stroke','stableford','ambrose'].map(f=>`<button class="seg ${roundSetup.format===f?'active':''}" data-format="${f}">${formatName(f)}</button>`).join('')}</div></div>
+      <div class="field"><label>Players</label><div class="player-pills">${state.players.map(p=>`<button class="pill ${roundSetup.playerIds.includes(p.id)?'active':''}" data-player-select="${esc(p.id)}" style="display:inline-flex;align-items:center;gap:7px">${avatarHtml(p)}<span>${esc(p.name)} · ${p.handicap}</span></button>`).join('')}</div></div>
+      <button class="btn btn-primary" style="width:100%" data-action="start-round" ${selected&&(selected.activated||selected.isDemo)?'':'disabled'}>${roundSetup.mode==='demo'?'Start demo round':'Start round'}</button>
+    </div>`:`<div class="empty"><strong>No real courses saved yet</strong><p>Add your course scorecard or import a course file. Location does not download courses.</p><div class="btn-row"><button class="btn btn-primary" data-action="new-course">＋ Add course</button><button class="btn btn-secondary" data-action="import-course">Import course</button></div><p>Just exploring? Choose <strong>Try demo</strong> above.</p></div>`}
+    ${roundSetup.mode==='real'?`<section class="section"><div class="location-card"><div><strong>Nearby saved courses</strong><div class="meta" id="setup-location-status">${near?`${esc(near.c.name)} · about ${(near.d/1000).toFixed(1)} km away`:'Location is optional. Choose a course yourself or check nearby saved courses.'}</div></div><button class="btn btn-secondary" data-action="locate-course">Use location</button></div></section>`:''}
+    <section class="section"><div class="section-title"><h2>Your courses</h2><span>${creditsLeft()} course credits left</span></div><div class="btn-row"><button class="btn btn-secondary" data-action="new-course">＋ Add course</button><button class="btn btn-secondary" data-action="import-course">Import course</button></div><p class="setup-help">Each saved course represents one tee set. Add the par, stroke index and ratings for the tees you play. GPS mapping is optional.</p><div class="list">${state.courses.filter(c=>!c.isDemo).map(courseCard).join('')||'<div class="small">The demo is separate from your real course library.</div>'}</div></section>
   `,'Golf');
 }
-function courseCard(c){return `<div class="list-item"><div><strong>${esc(c.name)}</strong><div class="meta">${esc(c.location||'')} · Par ${parTotal(c)} · SR ${Number(c.scratchRating??parTotal(c)).toFixed(1)} · Slope ${Number(c.slopeRating??113)}</div></div><div>${c.isDemo?'<span class="badge blue">Demo</span>':c.activated?'<span class="badge">Activated</span>':`<button class="btn btn-secondary" data-activate-course="${c.id}" ${creditsLeft()<=0?'disabled':''}>Use credit</button>`}</div></div>`}
-
+function courseCard(c){return `<div class="list-item course-list-item"><div><strong>${esc(c.name)}${c.teeName?' · '+esc(c.teeName):''}</strong><div class="meta">${esc(c.location||'')} · Par ${parTotal(c)}</div><div class="gps-readiness"><span class="badge ${mappingCount(c)===18?'':'amber'}">${esc(mappingLabel(c))}</span></div>${mappingCount(c)?'<div class="small">Field check pending · green centres only</div>':''}<div class="course-tools"><button class="btn btn-secondary" data-edit-course="${esc(c.id)}">Edit scorecard / GPS</button>${c.activated?'<span class="badge">Ready to select</span>':`<button class="btn btn-primary" data-activate-course="${esc(c.id)}" ${creditsLeft()<=0?'disabled':''}>Activate · 1 credit</button>`}</div></div></div>`}
 function startRound(){
+  if(state.activeRound){setView('play');return toast('Resume or finish your current round first')}
   const courseId=document.getElementById('round-course')?.value;
   const format=document.querySelector('.seg.active')?.dataset.format||'stroke';
   const selected=[...document.querySelectorAll('.pill.active')].map(x=>x.dataset.playerSelect);
   if(!courseId||!selected.length)return toast('Choose a course and at least one player');
   const c=courseById(courseId);
-  state.activeRound={id:uid(),courseId,format,playerIds:selected,hole:1,startedAt:now(),scores:Object.fromEntries(selected.map(pid=>[pid,Array(18).fill(null)])),stats:Object.fromEntries(selected.map(pid=>[pid,Array.from({length:18},()=>defaultShotStat())])),phantomRoundId:null};
+  if(!c||!(c.activated||c.isDemo)||!selected.every(id=>state.players.some(p=>p.id===id)))return toast('Choose an activated course and valid players');
+  state.activeRound={id:uid(),courseId,format,playerIds:selected,hole:1,startedAt:now(),courseSnapshot:structuredClone(c),playerSnapshots:structuredClone(selected.map(playerById)),scores:Object.fromEntries(selected.map(pid=>[pid,Array(18).fill(null)])),stats:Object.fromEntries(selected.map(pid=>[pid,Array.from({length:18},()=>defaultShotStat())])),phantomRoundId:null};
   save();render();
 }
 function roundView(){
-  const r=state.activeRound;ensureRoundStats(r);const c=courseById(r.courseId),h=c.holes[r.hole-1];
-  if(!h){state.activeRound=null;save();return playView()}
+  const r=state.activeRound;ensureRoundStats(r);const c=roundCourse(r),h=c?.holes?.[r.hole-1];
+  if(!h)return shell('<div class="callout warning"><h2>Round kept for recovery</h2><p>The course details for this round are missing. Download a backup before restoring the course.</p><button class="btn btn-primary" data-action="export-backup">Download backup</button></div>','Round');
   const dist=currentDistance(h);
   const progress=Math.round((r.hole/18)*100);
   return shell(`
-    <div class="round-head"><div class="hole-info"><div class="eyebrow">${esc(c.name)}</div><h1>Hole ${r.hole}</h1><div class="sub">Par ${h.par} · SI ${h.si} · ${r.format[0].toUpperCase()+r.format.slice(1)}</div></div><button class="gps-box" data-action="gps"><div class="gps-number">${dist??'GPS'}</div><div class="gps-label">${dist!=null?'metres to green':'tap to locate'}</div></button></div>
+    <div class="round-head"><div class="hole-info"><div class="eyebrow">${esc(c.name)}</div><h1>Hole ${r.hole}</h1><div class="sub">Par ${h.par} · SI ${h.si} · ${r.format[0].toUpperCase()+r.format.slice(1)}</div></div><div id="round-gps">${roundGpsHtml(h,c)}</div></div>
     <div class="progress"><span style="width:${progress}%"></span></div>
     <div class="scoreboard">${r.playerIds.map(pid=>scoreRow(r,pid,h)).join('')}</div>
     <section class="section">${liveLeaderboardHtml(r,c)}</section>
@@ -279,22 +350,37 @@ function roundView(){
   `,'Round');
 }
 function liveLeaderboardHtml(r,c){const played=Math.max(0,r.hole-1)+(allCurrentScores()?1:0);const rows=r.playerIds.map(pid=>{const p=playerById(pid),scores=r.scores[pid].slice(0,played).filter(x=>x!=null);const gross=scores.reduce((a,b)=>a+b,0);const pts=scores.reduce((a,score,i)=>a+stablefordPoints(score,c.holes[i],p.handicap),0);return {p,gross,pts,holes:scores.length}});rows.sort((a,b)=>r.format==='stableford'?b.pts-a.pts:a.gross-b.gross);return `<div class="live-board"><div class="live-head"><strong>Live leaderboard</strong><span class="live-badge">LIVE · ${played}/18</span></div>${rows.map((x,i)=>`<div class="leader-row"><span class="leader-pos">${i+1}</span>${avatarHtml(x.p)}<div><strong>${esc(x.p.name)}</strong><div class="meta">HCP ${x.p.handicap}</div></div><span class="leader-score">${x.holes?(r.format==='stableford'?x.pts+' pts':x.gross):'—'}</span></div>`).join('')}<div class="small" style="margin-top:8px">Updates as scores are entered on this device. Multi-phone live sync comes with the future cloud version.</div></div>`}
-function scoreRow(r,pid,h){const p=playerById(pid),score=r.scores[pid][r.hole-1],shown=score??h.par;const pts=r.format==='stableford'&&score?stablefordPoints(score,h,p.handicap):null;const st=r.stats?.[pid]?.[r.hole-1];return `<div class="score-row"><div class="score-main">${avatarHtml(p)}<div><div class="score-name">${esc(p.name)}</div><div class="score-meta">HCP ${p.handicap}${pts!==null?` · ${pts} pts`:''}</div><button class="stat-chip ${statsRecorded(st)?'has':''}" data-hole-stats="${pid}">${statsRecorded(st)?'✓ Stats':'＋ Stats'}</button></div></div><div class="stepper"><button data-score="${pid}" data-delta="-1">−</button><div class="score-value">${shown}</div><button data-score="${pid}" data-delta="1">＋</button></div></div>`}
+function scoreRow(r,pid,h){const p=playerById(pid),score=r.scores[pid][r.hole-1],shown=score??h.par;const pts=r.format==='stableford'&&score?stablefordPoints(score,h,p.handicap):null;const st=r.stats?.[pid]?.[r.hole-1];return `<div class="score-row"><div class="score-main">${avatarHtml(p)}<div><div class="score-name">${esc(p.name)}</div><div class="score-meta">HCP ${p.handicap}${pts!==null?` · ${pts} pts`:''}</div><button class="stat-chip ${statsRecorded(st)?'has':''}" data-hole-stats="${pid}">${statsRecorded(st)?'✓ Stats':'＋ Stats'}</button></div></div><div class="stepper"><button aria-label="Decrease score for ${esc(p.name)}" data-score="${pid}" data-delta="-1">−</button><button class="score-value" data-par-score="${esc(pid)}" aria-label="${score==null?'Record par for ':'Set par for '}${esc(p.name)}">${score??'—'}<small>${score==null?'par '+h.par:'set par'}</small></button><button aria-label="Increase score for ${esc(p.name)}" data-score="${pid}" data-delta="1">＋</button></div></div>`}
 function openHoleStats(pid){const r=state.activeRound;ensureRoundStats(r);const p=playerById(pid),i=r.hole-1,st=r.stats[pid][i],hole=courseById(r.courseId).holes[i];window.__statPlayer=pid;modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>${esc(p.name)} · Hole ${r.hole}</h2><button class="icon-btn" data-action="close-modal">✕</button></div><div class="small" style="margin-bottom:14px">Optional detail. Enter only what you want to track.</div><div class="field"><label>Fairway</label><select id="stat-fairway"><option value="na" ${st.fairway==='na'?'selected':''}>${hole.par===3?'Not applicable (Par 3)':'Not recorded'}</option><option value="hit" ${st.fairway==='hit'?'selected':''}>Hit</option><option value="left" ${st.fairway==='left'?'selected':''}>Missed left</option><option value="right" ${st.fairway==='right'?'selected':''}>Missed right</option></select></div><div class="field"><label>Green in regulation</label><select id="stat-gir"><option value="0" ${!st.gir?'selected':''}>No / not recorded</option><option value="1" ${st.gir?'selected':''}>Yes</option></select></div><div class="stat-grid"><div class="field"><label>Putts</label><input id="stat-putts" type="number" min="0" max="10" placeholder="e.g. 2" value="${st.putts??''}"></div><div class="field"><label>Chips</label><input id="stat-chips" type="number" min="0" max="10" value="${st.chips||0}"></div><div class="field"><label>Sand shots</label><input id="stat-sand" type="number" min="0" max="10" value="${st.sand||0}"></div><div class="field"><label>Penalties</label><input id="stat-penalties" type="number" min="0" max="10" value="${st.penalties||0}"></div></div><button class="btn btn-primary" style="width:100%" data-action="save-hole-stats">Save hole stats</button></div></div>`;render()}
 function saveHoleStats(){const r=state.activeRound,pid=window.__statPlayer;if(!r||!pid)return;ensureRoundStats(r);const i=r.hole-1;r.stats[pid][i]={fairway:document.getElementById('stat-fairway').value,gir:document.getElementById('stat-gir').value==='1',putts:document.getElementById('stat-putts').value===''?null:Math.max(0,Number(document.getElementById('stat-putts').value)),chips:Math.max(0,Number(document.getElementById('stat-chips').value||0)),sand:Math.max(0,Number(document.getElementById('stat-sand').value||0)),penalties:Math.max(0,Number(document.getElementById('stat-penalties').value||0))};modal=null;save();render();toast('Hole stats saved')}
 function stablefordPoints(gross,hole,hcp){const base=Math.floor(hcp/18),extra=hole.si<=hcp%18?1:0,strokes=base+extra;return Math.max(0,2+hole.par+strokes-gross)}
-function currentDistance(h){if(!gpsPosition||!hasGreenCoordinates(h))return null;return Math.round(haversine(gpsPosition.latitude,gpsPosition.longitude,Number(h.lat),Number(h.lng)))}
+function gpsQuality(){
+  if(!gpsPosition)return {ok:false,message:'GPS off · tap to locate'};
+  if(!isCoordinate(gpsPosition.latitude,90)||!isCoordinate(gpsPosition.longitude,180)||!Number.isFinite(gpsPosition.timestamp)||Date.now()-gpsPosition.timestamp>30000)return {ok:false,message:'Location is stale · refresh GPS'};
+  if(!Number.isFinite(gpsPosition.accuracy)||gpsPosition.accuracy<0||gpsPosition.accuracy>25)return {ok:false,message:'Weak GPS signal · move into open sky'};
+  return {ok:true,message:`Phone accuracy about ${Math.round(gpsPosition.accuracy)} m · updated ${Math.max(0,Math.round((Date.now()-gpsPosition.timestamp)/1000))}s ago`};
+}
+function currentDistance(h){if(!gpsQuality().ok||!hasGreenCoordinates(h))return null;const d=Math.round(haversine(gpsPosition.latitude,gpsPosition.longitude,Number(h.lat),Number(h.lng)));return d>2000?null:d}
+function roundGpsHtml(h,c){const d=currentDistance(h),q=gpsQuality();let note=!hasGreenCoordinates(h)?'No green-centre mapping for this hole':!q.ok?q.message:d==null?'More than 2 km away · check course and hole':q.message;return `<button class="gps-box" data-action="gps" aria-label="${gpsWatchId==null?'Start':'Stop'} GPS"><div class="gps-number">${d??'GPS'}</div><div class="gps-label">${d!=null?'metres to green centre':gpsWatchId==null?'tap to locate':'tap to stop'}</div></button><div class="gps-note">${esc(note)}${d!=null?'<br>Centre only · not pin position':''}</div>`}
+function refreshGpsDisplay(){const r=state.activeRound,c=r?roundCourse(r):null,h=c?.holes?.[r?.hole-1],el=document.getElementById('round-gps');if(el&&h){el.innerHTML=roundGpsHtml(h,c);el.querySelector?.('[data-action]')?.addEventListener('click',enableGps)}const advice=document.getElementById('round-caddie-content');if(advice&&r)advice.innerHTML=roundCaddieContent(r)}
 function haversine(lat1,lon1,lat2,lon2){const R=6371000,toRad=x=>x*Math.PI/180;const a=Math.sin(toRad(lat2-lat1)/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(toRad(lon2-lon1)/2)**2;return 2*R*Math.asin(Math.sqrt(a))}
-function changeScore(pid,delta){const r=state.activeRound,c=courseById(r.courseId),h=c.holes[r.hole-1],i=r.hole-1;let s=r.scores[pid][i];if(s==null)s=h.par;s=Math.max(1,s+delta);r.scores[pid][i]=s;save();render()}
+function changeScore(pid,delta){const r=state.activeRound,c=roundCourse(r),h=c.holes[r.hole-1],i=r.hole-1;let s=r.scores[pid][i];if(s==null)s=h.par;s=Math.max(1,s+delta);r.scores[pid][i]=s;save();render()}
+function setParScore(pid){const r=state.activeRound;if(!r||!r.scores[pid])return;r.scores[pid][r.hole-1]=roundCourse(r).holes[r.hole-1].par;save();render()}
 function allCurrentScores(){const r=state.activeRound;return r.playerIds.every(pid=>r.scores[pid][r.hole-1]!=null)}
 function nextHole(){if(!allCurrentScores()) return toast('Enter a score for each player');state.activeRound.hole=Math.min(18,state.activeRound.hole+1);save();render()}
 function prevHole(){state.activeRound.hole=Math.max(1,state.activeRound.hole-1);save();render()}
 function finishRound(){
-  const r=state.activeRound;if(!r)return;if(!allCurrentScores())return toast('Enter a score for each player');
-  const c=courseById(r.courseId);const beforeEstimate=estimateHandicap('brad').value;
-  const results=r.playerIds.map(pid=>{const p=playerById(pid),scores=r.scores[pid].map((s,i)=>s??c.holes[i].par);const gross=scores.reduce((a,b)=>a+b,0);const points=scores.reduce((a,s,i)=>a+stablefordPoints(s,c.holes[i],p.handicap),0);const net=gross-p.handicap;const diff=r.format==='ambrose'?null:scoreDifferential(points,p.handicap,c);return {playerId:pid,name:p.name,gross,net,points,toPar:gross-parTotal(c),handicapUsed:p.handicap,scoreDifferential:diff,statsSummary:summarizeShotStats(r.stats?.[pid]||[])};}).sort((a,b)=>r.format==='stableford'?b.points-a.points:a.net-b.net);
+  const r=state.activeRound;if(!r)return;
+  if(!allCurrentScores())return toast('Enter a score for each player');
+  const missing=Array.from({length:18},(_,i)=>i).find(i=>r.playerIds.some(pid=>!Number.isInteger(r.scores[pid]?.[i])||r.scores[pid][i]<1));
+  if(missing!==undefined){r.hole=missing+1;save();render();return toast(`Hole ${missing+1} needs a score. Skipped holes are not filled with par.`)}
+  const c=roundCourse(r);if(!c)return toast('Course details are missing. Your round has been kept.');
+  const beforeEstimate=estimateHandicap('brad').value;
+  const results=r.playerIds.map(pid=>{const p=playerById(pid),scores=r.scores[pid].slice(0,18);const gross=scores.reduce((a,b)=>a+b,0);const points=scores.reduce((a,score,i)=>a+stablefordPoints(score,c.holes[i],p.handicap),0);const net=gross-p.handicap;const diff=r.format==='ambrose'?null:scoreDifferential(points,p.handicap,c);return {playerId:pid,name:p.name,gross,net,points,toPar:gross-parTotal(c),handicapUsed:p.handicap,scoreDifferential:diff,statsSummary:summarizeShotStats(r.stats?.[pid]||[])};}).sort((a,b)=>r.format==='stableford'?b.points-a.points:a.net-b.net);
   const completed={...r,courseName:c.name,scratchRating:Number(c.scratchRating??parTotal(c)),slopeRating:Number(c.slopeRating??113),pcc:Number(c.pcc??0),completedAt:now(),results,handicapBefore:beforeEstimate};
-  state.rounds.push(completed);completed.handicapAfter=estimateHandicap('brad').value;state.activeRound=null;state.view='stats';save();openShareRound(completed.id,true);toast('Round saved');
+  state.rounds.push(completed);completed.handicapAfter=estimateHandicap('brad').value;state.activeRound=null;state.view='stats';
+  if(!save()){state.rounds.pop();state.activeRound=r;state.view='play';render();return toast('Round could not be saved. Keep this page open and download a backup.')}
+  stopGps();openShareRound(completed.id,true);toast('Round saved on this phone');
 }
 function phantomStrip(r){const pr=state.rounds.find(x=>x.id===r.phantomRoundId);if(!pr)return'';const pid=r.playerIds[0],current=sumThrough(r.scores[pid],r.hole),past=sumThrough(pr.scores[pr.playerIds[0]]||[],r.hole);const diff=current-past;return `<section class="section"><div class="callout"><strong>👻 Phantom:</strong> ${diff===0?'Level':diff>0?`${diff} shots behind`:`${Math.abs(diff)} shots ahead`} through ${r.hole}.</div></section>`}
 function sumThrough(arr,hole){return arr.slice(0,hole).reduce((a,s)=>a+(Number(s)||0),0)}
@@ -424,7 +510,8 @@ function caddieView(){
   `,'Caddie');
 }
 function caddieRecommendation(distance){if(distance===0)return'<div class="caddie-card"><div class="eyebrow">Distance to target</div><div class="club-rec">0 m</div><div class="small">Check your position and lie before choosing a club. No carry-distance recommendation is shown at zero metres.</div></div>';const clubs=[...state.profile.clubs].sort((a,b)=>a.carry-b.carry);if(!clubs.length)return'<div class="empty">Add club distances in Profile.</div>';const nearest=clubs.reduce((a,b)=>Math.abs(b.carry-distance)<Math.abs(a.carry-distance)?b:a);const safe=clubs.find(c=>c.carry>=distance)||clubs.at(-1);return `<div class="caddie-card"><div class="eyebrow">Recommended</div><div class="club-rec">${esc(nearest.name)}</div><div>${nearest.carry} m normal carry · target ${distance} m</div><hr><div class="small"><strong>Safe option:</strong> ${esc(safe.name)} (${safe.carry} m). V1 deliberately keeps the advice simple. Wind, lie, hazards and dispersion are reserved for GPS+ / Caddie upgrades.</div></div>`}
-function roundCaddie(){const r=state.activeRound,c=courseById(r.courseId),h=c.holes[r.hole-1],d=currentDistance(h);modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>ParLink Caddie</h2><button class="icon-btn" data-action="close-modal">✕</button></div>${caddieRecommendation(d??135)}${d==null?'<div class="callout warning" style="margin-top:12px">No green coordinate/GPS distance is available for this hole, so V1 is showing a 135 m example.</div>':''}</div></div>`;render()}
+function roundCaddieContent(r){const c=roundCourse(r),h=c?.holes[r.hole-1],d=currentDistance(h);return d!=null?caddieRecommendation(d)+'<p class="small">To green centre · '+esc(gpsQuality().message)+'</p>':c?.isDemo?caddieRecommendation(135)+'<div class="callout warning" style="margin-top:12px">Demo only: showing a 135 m example, not a measured distance.</div>':'<div class="callout warning">No reliable distance is available for this hole. Add green-centre mapping and obtain a fresh GPS reading, or use a distance you have measured yourself in Caddie from Home.</div>'}
+function roundCaddie(){const r=state.activeRound;if(!r)return;modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>ParLink Caddie</h2><button class="icon-btn" data-action="close-modal">✕</button></div><div id="round-caddie-content">${roundCaddieContent(r)}</div></div></div>`;render()}
 
 function statsView(){
   const rounds=state.rounds.slice().reverse();
@@ -461,7 +548,7 @@ function deleteOpenRound(){const id=window.__openRoundId;state.openRounds=state.
 function openRoundInviteText(or){const going=openRoundGoing(or).map(playerById).filter(Boolean);return `⛳ ${or.title||'Golf round'}\n${openRoundDate(or)}${or.time?` at ${or.time}`:''}\n${openRoundCourseName(or)} · ${formatName(or.format||'stableford')}\n${going.length}/${or.maxPlayers||4} confirmed${or.notes?`\n${or.notes}`:''}\n\nOrganised with ParLink`}
 async function shareOpenRound(id){const or=state.openRounds.find(x=>x.id===id);if(!or)return;const text=openRoundInviteText(or);try{if(navigator.share){await navigator.share({title:'ParLink golf invite',text});return}await navigator.clipboard.writeText(text);toast('Invite copied')}catch(e){if(e?.name!=='AbortError')toast('Share unavailable')}}
 function calendarOpenRound(id){const or=state.openRounds.find(x=>x.id===id);if(!or?.date)return toast('Add a date first');const start=(or.date.replaceAll('-','')+'T'+(or.time||'08:00').replace(':','')+'00');const endDate=new Date(`${or.date}T${or.time||'08:00'}:00`);endDate.setHours(endDate.getHours()+5);const pad=n=>String(n).padStart(2,'0');const end=`${endDate.getFullYear()}${pad(endDate.getMonth()+1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//ParLink//Golf Round//EN\r\nBEGIN:VEVENT\r\nUID:${or.id}@parlink\r\nDTSTART:${start}\r\nDTEND:${end}\r\nSUMMARY:${or.title||'Golf round'}\r\nLOCATION:${openRoundCourseName(or)}\r\nDESCRIPTION:${(or.notes||'Organised with ParLink').replace(/\n/g,' ')}\r\nEND:VEVENT\r\nEND:VCALENDAR`;const blob=new Blob([ics],{type:'text/calendar'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ParLink-golf-round.ics';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);toast('Calendar file created')}
-function startOpenRound(id){const or=state.openRounds.find(x=>x.id===id);if(!or)return;const c=courseById(or.courseId);if(!c||!(c.activated||c.isDemo))return toast('Activate this course first');let ids=openRoundGoing(or);if(!ids.length)ids=['brad'];state.activeRound={id:uid(),courseId:or.courseId,format:or.format||'stableford',playerIds:ids,hole:1,startedAt:now(),scores:Object.fromEntries(ids.map(pid=>[pid,Array(18).fill(null)])),stats:Object.fromEntries(ids.map(pid=>[pid,Array.from({length:18},()=>defaultShotStat())])),phantomRoundId:null,openRoundId:or.id};state.view='play';save();render();toast('Round started from your plan')}
+function startOpenRound(id){if(state.activeRound){setView('play');return toast('Resume or finish your current round first')}const or=state.openRounds.find(x=>x.id===id);if(!or)return;const c=courseById(or.courseId);if(!c||!(c.activated||c.isDemo))return toast('Activate this course first');let ids=openRoundGoing(or);if(!ids.length)ids=['brad'];state.activeRound={id:uid(),courseId:or.courseId,format:or.format||'stableford',playerIds:ids,hole:1,startedAt:now(),courseSnapshot:structuredClone(c),playerSnapshots:structuredClone(ids.map(playerById)),scores:Object.fromEntries(ids.map(pid=>[pid,Array(18).fill(null)])),stats:Object.fromEntries(ids.map(pid=>[pid,Array.from({length:18},()=>defaultShotStat())])),phantomRoundId:null,openRoundId:or.id};state.view='play';save();render();toast('Round started from your plan')}
 
 function matesView(){
   const wins={};state.players.forEach(p=>wins[p.id]=0);state.rounds.forEach(r=>{const w=r.results?.[0]?.playerId;if(w)wins[w]=(wins[w]||0)+1});
@@ -472,7 +559,7 @@ function matesView(){
     <section class="section"><div class="section-title"><h2>Open rounds</h2><span>Need a player?</span></div><div class="btn-row" style="margin-bottom:10px"><button class="btn btn-primary" data-action="new-open-round">＋ Create open round</button></div>${open.length?`<div class="list">${open.map(openRoundCard).join('')}</div>`:`<div class="empty">No open rounds yet. Create one for your next game and invite the crew.</div>`}</section>
     <section class="section"><div class="section-title"><h2>Groups</h2><span>Your regular crews</span></div><div class="btn-row" style="margin-bottom:10px"><button class="btn btn-secondary" data-action="new-group">＋ New group</button></div>${groups.length?`<div class="list">${groups.map(groupCard).join('')}</div>`:`<div class="empty">Create a group for your usual foursome or larger golf crew.</div>`}</section>
     <section class="section"><div class="section-title"><h2>Mates ladder</h2><span>Wins from saved rounds</span></div><div class="list">${ladder.map((p,i)=>`<div class="list-item"><div class="score-main">${avatarHtml(p)}<div><strong>${esc(p.name)}</strong><div class="meta">#${i+1} · HCP ${p.handicap}</div></div></div><span class="badge ${i===0?'':'blue'}">${wins[p.id]||0} win${wins[p.id]===1?'':'s'}</span></div>`).join('')}</div></section>
-    <section class="section"><div class="privacy-box"><strong>Privacy first.</strong> V1.4 organises your existing local player list only. It does not expose you to strangers or continuously track your location. Nearby golfer discovery can be added later with suburb-level matching, blocking and reporting.</div></section>
+    <section class="section"><div class="privacy-box"><strong>Privacy first.</strong> V1.5 organises your existing local player list only. It does not expose you to strangers or continuously track your location. Nearby golfer discovery can be added later with suburb-level matching, blocking and reporting.</div></section>
     <section class="section"><button class="btn btn-secondary" data-action="edit-players">Edit players & photos</button></section>
   `,'Mates');
 }
@@ -482,50 +569,90 @@ function profileView(){
   return shell(`
     <div class="form-card"><div class="section-title"><h2>Profile</h2><span>Stored on device</span></div>
       <div class="profile-photo-row">${avatarHtml(me,'lg')}<div><strong>${esc(state.profile.name)}</strong><div class="photo-actions" style="margin-top:8px"><button class="btn btn-secondary photo-btn" data-photo-player="brad">${me.photo?'Change photo':'Add photo'}</button>${me.photo?'<button class="btn btn-secondary photo-btn" data-remove-photo="brad">Remove</button>':''}</div></div></div>
-      <div class="privacy-note"><span>🔒</span><span>Your photo is resized and stored locally on this device. ParLink V1.4 does not upload it anywhere.</span></div>
+      <div class="privacy-note"><span>🔒</span><span>Your photo is resized and stored locally on this device. ParLink V1.5 does not upload it anywhere.</span></div>
       <div class="field" style="margin-top:14px"><label>Name</label><input id="profile-name" value="${esc(state.profile.name)}"></div>
       <div class="field"><label>Official / entered handicap</label><input id="profile-hcp" type="number" min="0" max="54" step="0.1" value="${state.profile.officialHandicap??state.profile.handicap}"></div>
       <button class="btn btn-primary" data-action="save-profile">Save profile</button>
       <div class="small" style="margin-top:10px">This is your official or manually entered handicap. ParLink keeps its calculated estimate separate.</div>
     </div>
-    <section class="section"><div class="section-title"><h2>Social profile</h2><span>For groups & future discovery</span></div><div class="form-card"><div class="social-profile-grid"><div class="field"><label>Suburb / region</label><input id="profile-suburb" value="${esc(state.profile.suburb||'')}" placeholder="e.g. Vincentia NSW"></div><div class="field"><label>Home course</label><input id="profile-home-course" value="${esc(state.profile.homeCourse||'')}" placeholder="Optional"></div></div><div class="field"><label>Playing style</label><select id="profile-style"><option ${state.profile.playingStyle==='Social'?'selected':''}>Social</option><option ${state.profile.playingStyle==='Competitive'?'selected':''}>Competitive</option><option ${state.profile.playingStyle==='Both'?'selected':''}>Both</option></select></div><div class="field"><label>Usually available</label><div class="day-pills">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d,i)=>{const full=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][i];return `<label class="day-pill"><input type="checkbox" data-availability="${full}" ${(state.profile.availability||[]).includes(full)?'checked':''}> ${d}</label>`}).join('')}</div></div><label class="switch-line"><input id="profile-discoverable" type="checkbox" ${state.profile.discoverable?'checked':''}> <span>Allow nearby-golfer discovery when ParLink adds cloud accounts. Matching would use suburb-level location, not continuous GPS.</span></label><label class="switch-line"><input id="profile-show-hcp" type="checkbox" ${state.profile.showHandicap!==false?'checked':''}> <span>Show my handicap to invited ParLink mates.</span></label><button class="btn btn-primary" data-action="save-social-profile">Save social profile</button></div><div class="privacy-note"><span>🔒</span><span>These details stay on this device in V1.4. Exact GPS is still requested only when you choose a course/GPS feature.</span></div></section>
+    <section class="section"><div class="section-title"><h2>Social profile</h2><span>For groups & future discovery</span></div><div class="form-card"><div class="social-profile-grid"><div class="field"><label>Suburb / region</label><input id="profile-suburb" value="${esc(state.profile.suburb||'')}" placeholder="e.g. Vincentia NSW"></div><div class="field"><label>Home course</label><input id="profile-home-course" value="${esc(state.profile.homeCourse||'')}" placeholder="Optional"></div></div><div class="field"><label>Playing style</label><select id="profile-style"><option ${state.profile.playingStyle==='Social'?'selected':''}>Social</option><option ${state.profile.playingStyle==='Competitive'?'selected':''}>Competitive</option><option ${state.profile.playingStyle==='Both'?'selected':''}>Both</option></select></div><div class="field"><label>Usually available</label><div class="day-pills">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d,i)=>{const full=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][i];return `<label class="day-pill"><input type="checkbox" data-availability="${full}" ${(state.profile.availability||[]).includes(full)?'checked':''}> ${d}</label>`}).join('')}</div></div><label class="switch-line"><input id="profile-discoverable" type="checkbox" ${state.profile.discoverable?'checked':''}> <span>Allow nearby-golfer discovery when ParLink adds cloud accounts. Matching would use suburb-level location, not continuous GPS.</span></label><label class="switch-line"><input id="profile-show-hcp" type="checkbox" ${state.profile.showHandicap!==false?'checked':''}> <span>Show my handicap to invited ParLink mates.</span></label><button class="btn btn-primary" data-action="save-social-profile">Save social profile</button></div><div class="privacy-note"><span>🔒</span><span>These details stay on this device in V1.5. Exact GPS is still requested only when you choose a course/GPS feature.</span></div></section>
     <section class="section"><div class="section-title"><h2>Location</h2><span>Only when needed</span></div><div class="location-card"><div class="location-state"><span class="location-dot ${gpsPosition?'on':''}"></span><div><strong>${gpsPosition?'Location active':'Location off'}</strong><div class="meta">${gpsPosition?`Accuracy about ${Math.round(gpsPosition.accuracy||0)} m`:'Used for nearby saved courses and GPS distances.'}</div></div></div><button class="btn btn-secondary" data-action="locate-course">${gpsPosition?'Refresh':'Use location'}</button></div><div class="privacy-note"><span>📍</span><span>ParLink asks for location when you choose a GPS feature, not as a compulsory sign-up requirement.</span></div></section>
     <section class="section"><div class="section-title"><h2>Handicap tracking</h2><span>ParLink estimate</span></div>${(()=>{const h=estimateHandicap('brad');return `<div class="list-item"><div><strong>${h.value==null?'Not enough rounds':h.value.toFixed(1)}</strong><div class="meta">${esc(h.status)}</div></div><button class="btn btn-secondary" data-nav="stats">View details</button></div>`})()}</section>
     <section class="section"><div class="section-title"><h2>Club distances</h2><span>Carry metres</span></div><div class="list">${state.profile.clubs.map((c,i)=>`<div class="list-item"><input class="club-name" data-i="${i}" value="${esc(c.name)}" style="max-width:150px"><input class="club-carry" data-i="${i}" type="number" value="${c.carry}" style="max-width:100px"></div>`).join('')}</div><div class="btn-row" style="margin-top:10px"><button class="btn btn-primary" data-action="save-clubs">Save clubs</button><button class="btn btn-secondary" data-action="add-club">＋ Add club</button></div></section>
     <section class="section"><div class="section-title"><h2>Course plan</h2><span>${creditsLeft()} credits left</span></div><div class="callout"><strong>2 course credits included.</strong> Demo courses do not consume a credit. Activating a user-added course uses one credit in this prototype.</div></section>
     <section class="section"><div class="section-title"><h2>GPS+</h2><span>Prototype switch</span></div><div class="list-item"><div><strong>GPS+ access</strong><div class="meta">Future paid plan for unlimited courses and richer GPS.</div></div><button class="btn ${state.gpsPlus?'btn-primary':'btn-secondary'}" data-action="toggle-gpsplus">${state.gpsPlus?'Enabled':'Enable demo'}</button></div></section>
-    <section class="section"><div class="callout warning"><strong>Watch companion is next-stage.</strong> Wear OS and Apple Watch scoring/GPS require a companion app and are not simulated in V1.4.</div></section>
-    <section class="section"><button class="btn btn-danger" data-action="reset-app">Reset all ParLink V1.4 data</button></section>
+    <section class="section"><div class="callout warning"><strong>Watch companion is next-stage.</strong> Wear OS and Apple Watch scoring/GPS require a companion app and are not simulated in V1.5.</div></section>
+    <section class="section"><div class="section-title"><h2>Backup and recovery</h2><span>Keep a separate copy</span></div><p class="setup-help">Rounds save on this phone, with a second local recovery copy when storage allows. Both can be removed if browser data is cleared. Download a backup before changing phones. There is no cloud backup.</p><div class="btn-row backup-actions"><button class="btn btn-primary" data-action="export-backup">Download backup</button><button class="btn btn-secondary" data-action="restore-backup">Restore backup</button></div></section>
+    <section class="section"><button class="btn btn-danger" data-action="reset-app">Reset all ParLink V1.5 data</button></section>
   `,'Profile');
 }
 
-function newCourseModal(){
-  modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>Add course</h2><button class="icon-btn" data-action="close-modal">✕</button></div><div class="field"><label>Course name</label><input id="course-name" placeholder="e.g. My Golf Club"></div><div class="field"><label>Location</label><input id="course-location" placeholder="Town / region"></div><div class="course-rating-grid"><div class="field"><label>Scratch Rating</label><input id="course-scratch" type="number" step="0.1" value="72"></div><div class="field"><label>Slope Rating</label><input id="course-slope" type="number" min="55" max="155" value="113"></div><div class="field"><label>PCC</label><input id="course-pcc" type="number" min="-1" max="3" step="1" value="0"></div></div><div class="small">Rating data is used for the ParLink handicap estimate. Set par, stroke index and optional green-centre coordinates below.</div><div style="margin-top:12px">${defaultHoles().map(h=>`<div class="course-hole"><div class="num">${h.number}</div><input data-hole-par="${h.number}" type="number" min="3" max="6" value="${h.par}" title="Par"><input data-hole-si="${h.number}" type="number" min="1" max="18" value="${h.si}" title="Stroke index"><button class="btn btn-secondary" data-set-green="${h.number}">GPS</button></div>`).join('')}</div><button class="btn btn-primary" style="width:100%;margin-top:10px" data-action="save-course">Save course</button></div></div>`;render();
+function newCourseModal(id=null){
+  const c=id?state.courses.find(x=>x.id===id):null;window.__editingCourseId=c?.id||null;window.__pendingGreens={};
+  const holes=c?.holes||defaultHoles();
+  modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>${c?'Edit course / GPS':'Add course'}</h2><button class="icon-btn" data-action="close-modal">✕</button></div><div class="field"><label for="course-name">Course name</label><input id="course-name" value="${esc(c?.name||'')}" placeholder="e.g. My Golf Club"></div><div class="field"><label for="course-location">Location</label><input id="course-location" value="${esc(c?.location||'')}" placeholder="Town / region"></div><div class="field"><label for="course-tee">Tee set</label><input id="course-tee" value="${esc(c?.teeName||'')}" placeholder="e.g. White tees"></div><div class="course-rating-grid"><div class="field"><label for="course-scratch">Scratch Rating</label><input id="course-scratch" type="number" step="0.1" value="${c?.scratchRating??72}"></div><div class="field"><label for="course-slope">Slope Rating</label><input id="course-slope" type="number" min="55" max="155" value="${c?.slopeRating??113}"></div><div class="field"><label for="course-pcc">PCC</label><input id="course-pcc" type="number" min="-1" max="3" value="${c?.pcc??0}"></div></div><div class="field"><label for="course-source">Scorecard / mapping source</label><input id="course-source" value="${esc(c?.dataSource||'')}" placeholder="Club scorecard, mapping provider or your GPS survey"></div><div class="callout warning">Check each hole against your tee’s scorecard. GPS coordinates must be the <strong>green centre</strong>. Leave them blank if unknown. A course location or clubhouse coordinate cannot supply hole distances.</div><div style="margin-top:12px">${holes.map((h,i)=>`<details class="mapping-hole"><summary>Hole ${i+1} · ${hasGreenCoordinates(h)?'coordinate supplied':'no GPS mapping'}</summary><div class="mapping-fields"><div class="field"><label for="hole-par-${i+1}">Par</label><input id="hole-par-${i+1}" data-hole-par="${i+1}" type="number" min="3" max="6" value="${h.par}"></div><div class="field"><label for="hole-si-${i+1}">Stroke index</label><input id="hole-si-${i+1}" data-hole-si="${i+1}" type="number" min="1" max="18" value="${h.si}"></div><div class="field"><label for="hole-lat-${i+1}">Centre latitude</label><input id="hole-lat-${i+1}" type="number" step="any" value="${esc(h.lat??'')}" placeholder="Optional"></div><div class="field"><label for="hole-lng-${i+1}">Centre longitude</label><input id="hole-lng-${i+1}" type="number" step="any" value="${esc(h.lng??'')}" placeholder="Optional"></div></div><button class="btn btn-secondary" style="margin-top:10px" data-set-green="${i+1}">Record GPS while at green centre</button><div id="gps-feedback-${i+1}" class="gps-feedback">Stand at the centre of this green before recording. Captured coordinates still need an on-course distance check.</div></details>`).join('')}</div><button class="btn btn-primary" style="width:100%;margin-top:12px" data-action="save-course">Save course</button></div></div>`;render();
 }
-function saveCourse(){const name=document.getElementById('course-name')?.value.trim();if(!name)return toast('Enter a course name');const holes=defaultHoles().map(h=>({...h,par:Number(document.querySelector(`[data-hole-par="${h.number}"]`)?.value||h.par),si:Number(document.querySelector(`[data-hole-si="${h.number}"]`)?.value||h.si),lat:null,lng:null}));const pending=window.__pendingGreens||{};holes.forEach(h=>{if(pending[h.number]){h.lat=pending[h.number].lat;h.lng=pending[h.number].lng}});state.courses.push({id:uid(),name,location:document.getElementById('course-location')?.value.trim()||'',activated:false,isDemo:false,scratchRating:Number(document.getElementById('course-scratch')?.value||parTotal({holes})),slopeRating:Number(document.getElementById('course-slope')?.value||113),pcc:Number(document.getElementById('course-pcc')?.value||0),holes,createdAt:now()});window.__pendingGreens={};modal=null;save();render();toast('Course added. Activate it with a course credit.')}
-function setGreenFromGps(holeNum){if(!navigator.geolocation)return toast('GPS not supported on this device');navigator.geolocation.getCurrentPosition(p=>{window.__pendingGreens=window.__pendingGreens||{};window.__pendingGreens[holeNum]={lat:p.coords.latitude,lng:p.coords.longitude};toast(`Hole ${holeNum} green position saved`)},()=>toast('Could not get GPS position'),{enableHighAccuracy:true,timeout:10000})}
-function activateCourse(id){const c=courseById(id);if(!c||c.activated)return;if(creditsLeft()<=0)return toast('No course credits remaining');c.activated=true;save();render();toast(`${c.name} activated`)}
-function importCourse(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{try{const data=JSON.parse(await input.files[0].text());if(!data.name||!Array.isArray(data.holes)||data.holes.length!==18)throw new Error();state.courses.push({id:uid(),name:data.name,location:data.location||'',activated:false,isDemo:false,scratchRating:Number(data.scratchRating??data.courseRating??72),slopeRating:Number(data.slopeRating??113),pcc:Number(data.pcc??0),holes:data.holes.map((h,i)=>({number:i+1,par:Number(h.par||4),si:Number(h.si||i+1),lat:h.lat??null,lng:h.lng??null})),createdAt:now()});save();render();toast('Course imported')}catch{toast('Invalid course JSON')}};input.click()}
-
+function validatedCourse(data){
+  if(!data||typeof data.name!=='string'||!data.name.trim()||!Array.isArray(data.holes)||data.holes.length!==18)throw new Error('A course needs a name and 18 holes.');
+  const holes=data.holes.map((h,i)=>{
+    if(!h||!Number.isInteger(Number(h.par))||Number(h.par)<3||Number(h.par)>6||!Number.isInteger(Number(h.si))||Number(h.si)<1||Number(h.si)>18)throw new Error(`Check par and stroke index for hole ${i+1}.`);
+    const blank=v=>v==null||(typeof v==='string'&&v.trim()==='');
+    const unmapped=blank(h.lat)&&blank(h.lng);
+    if(!unmapped&&!hasGreenCoordinates(h))throw new Error(`Hole ${i+1} needs a valid latitude and longitude, or both blank.`);
+    return {number:i+1,par:Number(h.par),si:Number(h.si),lat:unmapped?null:Number(h.lat),lng:unmapped?null:Number(h.lng),...(h.capturedAt?{capturedAt:String(h.capturedAt),captureAccuracy:Number(h.captureAccuracy)}:{})};
+  });
+  if(new Set(holes.map(h=>h.si)).size!==18)throw new Error('Stroke indexes must use each number from 1 to 18 once.');
+  const scratchRating=Number(data.scratchRating??data.courseRating??parTotal({holes})),slopeRating=Number(data.slopeRating??113),pcc=Number(data.pcc??0);
+  if(!Number.isFinite(scratchRating)||scratchRating<40||scratchRating>100||!Number.isInteger(slopeRating)||slopeRating<55||slopeRating>155||!Number.isInteger(pcc)||pcc< -1||pcc>3)throw new Error('Check the course rating, slope (55–155) and PCC (−1 to 3).');
+  return {name:data.name.trim().slice(0,150),location:String(data.location||'').slice(0,150),teeName:String(data.teeName||'').slice(0,60),dataSource:String(data.dataSource||'').slice(0,300),scratchRating,slopeRating,pcc,holes,mappingStatus:'unverified'};
+}
+function saveCourse(){try{
+  const value=id=>document.getElementById(id)?.value;
+  const data=validatedCourse({name:value('course-name'),location:value('course-location'),teeName:value('course-tee'),dataSource:value('course-source'),scratchRating:value('course-scratch'),slopeRating:value('course-slope'),pcc:value('course-pcc'),holes:Array.from({length:18},(_,i)=>({par:value('hole-par-'+(i+1)),si:value('hole-si-'+(i+1)),lat:value('hole-lat-'+(i+1)),lng:value('hole-lng-'+(i+1)),...(window.__pendingGreens?.[i+1]||{})}))});
+  const old=state.courses.find(c=>c.id===window.__editingCourseId),course={...(old||{id:uid(),activated:false,isDemo:false,createdAt:now()}),...data};
+  if(old)state.courses[state.courses.indexOf(old)]=course;else state.courses.push(course);
+  roundSetup.mode='real';roundSetup.courseId=course.id;window.__pendingGreens={};modal=null;save();render();toast(old?'Course updated': 'Course added. Activate it to start playing.');
+}catch(e){toast(e.message)}}
+function setGreenFromGps(holeNum){
+  if(!navigator.geolocation)return toast('GPS not supported on this device');
+  if(!confirm(`Are you standing at the centre of hole ${holeNum}’s green? Recording from elsewhere will give incorrect distances.`))return;
+  const editorId=window.__editingCourseId,editorModal=modal;
+  navigator.geolocation.getCurrentPosition(p=>{
+    if(modal!==editorModal||window.__editingCourseId!==editorId)return;
+    if(!Number.isFinite(p.coords.accuracy)||p.coords.accuracy>15||Date.now()-p.timestamp>15000||!isCoordinate(p.coords.latitude,90)||!isCoordinate(p.coords.longitude,180))return toast('GPS is not accurate enough to map a green. Try again in open sky.');
+    document.getElementById('hole-lat-'+holeNum).value=p.coords.latitude;document.getElementById('hole-lng-'+holeNum).value=p.coords.longitude;
+    window.__pendingGreens[holeNum]={capturedAt:now(),captureAccuracy:p.coords.accuracy};
+    document.getElementById('gps-feedback-'+holeNum).textContent=`Coordinate captured · phone accuracy about ${Math.round(p.coords.accuracy)} m. Save the course to keep it. Field distance check still pending.`;
+  },()=>toast('Could not get a location. No coordinates were changed.'),{enableHighAccuracy:true,maximumAge:0,timeout:15000});
+}
+function activateCourse(id){const c=state.courses.find(x=>x.id===id);if(!c||c.activated)return;if(creditsLeft()<=0)return toast('No course credits remaining');c.activated=true;roundSetup.mode='real';roundSetup.courseId=c.id;save();render();toast(`${c.name} is ready to select`)}
+function importCourse(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{const file=input.files?.[0];if(!file)return;try{const data=validatedCourse(JSON.parse(await file.text())),c={id:uid(),...data,activated:false,isDemo:false,createdAt:now()};state.courses.push(c);roundSetup.mode='real';roundSetup.courseId=c.id;save();render();toast('Course imported. Activate it to start playing.')}catch(e){toast(e.message||'Invalid course file. Nothing was imported.')}};showFilePicker(input)}
 function editPlayersModal(){modal=`<div class="modal-backdrop" data-action="close-modal"><div class="modal" onclick="event.stopPropagation()"><div class="section-title"><h2>Edit players</h2><button class="icon-btn" data-action="close-modal">✕</button></div><div class="small" style="margin-bottom:12px">Photos make scorecards and leaderboards easier to read. They stay on this device.</div>${state.players.map((p,i)=>`<div class="list-item player-edit-row">${avatarHtml(p)}<div class="player-edit-fields"><input data-pname="${i}" value="${esc(p.name)}"><button class="stat-chip" data-photo-player="${p.id}">${p.photo?'Change photo':'Add photo'}</button>${p.photo?`<button class="stat-chip" data-remove-photo="${p.id}">Remove</button>`:''}</div><input data-phcp="${i}" type="number" min="0" max="54" value="${p.handicap}"></div>`).join('')}<button class="btn btn-primary" style="width:100%;margin-top:12px" data-action="save-players">Save players</button></div></div>`;render()}
 function savePlayers(){state.players=state.players.map((p,i)=>({...p,name:document.querySelector(`[data-pname="${i}"]`).value.trim()||p.name,handicap:Number(document.querySelector(`[data-phcp="${i}"]`).value||0)}));state.players.forEach(p=>{if(p.id==='brad'){state.profile.name=p.name;state.profile.handicap=p.handicap;state.profile.officialHandicap=p.handicap;state.profile.photo=p.photo||null}});modal=null;save();render();toast('Players updated')}
-function pickPlayerPhoto(playerId){const input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=()=>{const file=input.files?.[0];if(!file)return;if(file.size>12*1024*1024)return toast('Choose an image under 12 MB');const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{const size=256,canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;const ctx=canvas.getContext('2d');const scale=Math.max(size/img.width,size/img.height),w=img.width*scale,h=img.height*scale;ctx.drawImage(img,(size-w)/2,(size-h)/2,w,h);const data=canvas.toDataURL('image/jpeg',.78);const p=playerById(playerId);if(p)p.photo=data;if(playerId==='brad')state.profile.photo=data;save();render();toast('Photo saved on this device')};img.src=reader.result};reader.readAsDataURL(file)};input.click()}
+function pickPlayerPhoto(playerId){const input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=()=>{const file=input.files?.[0];if(!file)return;if(file.size>12*1024*1024)return toast('Choose an image under 12 MB');const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{const size=256,canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;const ctx=canvas.getContext('2d');const scale=Math.max(size/img.width,size/img.height),w=img.width*scale,h=img.height*scale;ctx.drawImage(img,(size-w)/2,(size-h)/2,w,h);const data=canvas.toDataURL('image/jpeg',.78);const p=playerById(playerId);if(p)p.photo=data;if(playerId==='brad')state.profile.photo=data;save();render();toast('Photo saved on this device')};img.src=reader.result};reader.readAsDataURL(file)};showFilePicker(input)}
 function removePlayerPhoto(playerId){const p=playerById(playerId);if(p)p.photo=null;if(playerId==='brad')state.profile.photo=null;save();render();toast('Photo removed')}
-function locateCourse(){if(!navigator.geolocation)return toast('Location is not supported on this device');navigator.geolocation.getCurrentPosition(p=>{gpsPosition={latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy};render();const near=nearestCourse();toast(near?`Nearest saved course: ${near.c.name}`:'Location ready for GPS')},()=>toast('Location permission was not granted'),{enableHighAccuracy:true,maximumAge:60000,timeout:12000})}
-
-function enableGps(){if(!navigator.geolocation)return toast('GPS not supported');if(gpsWatchId!=null){navigator.geolocation.clearWatch(gpsWatchId);gpsWatchId=null;gpsPosition=null;toast('GPS stopped');render();return}gpsWatchId=navigator.geolocation.watchPosition(p=>{gpsPosition={latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy};render()},()=>toast('GPS permission denied'),{enableHighAccuracy:true,maximumAge:3000,timeout:15000});toast('GPS enabled')}
-
+function acceptPosition(p){gpsPosition={latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy,timestamp:p.timestamp};refreshGpsDisplay()}
+function locateCourse(){if(!navigator.geolocation)return toast('Location is not supported on this device');navigator.geolocation.getCurrentPosition(p=>{acceptPosition(p);const near=nearestCourse();if(!state.activeRound&&!modal){if(near&&near.d<5000){roundSetup.mode='real';roundSetup.courseId=near.c.id}render()}toast(near?`Nearest mapped saved course: ${near.c.name}`:'No mapped saved course nearby. You can still choose a course manually.')},()=>toast('Location unavailable. You can still score without GPS.'),{enableHighAccuracy:true,maximumAge:0,timeout:12000})}
+function stopGps(){if(gpsWatchId!=null&&navigator.geolocation)navigator.geolocation.clearWatch(gpsWatchId);gpsWatchId=null;gpsPosition=null}
+function enableGps(){if(!navigator.geolocation)return toast('GPS not supported');if(gpsWatchId!=null){stopGps();refreshGpsDisplay();toast('GPS stopped');return}gpsWatchId=navigator.geolocation.watchPosition(p=>{acceptPosition(p)},()=>{gpsPosition=null;refreshGpsDisplay();toast('Location unavailable. Scoring still works.')},{enableHighAccuracy:true,maximumAge:0,timeout:15000});refreshGpsDisplay();toast('Finding your location…')}
 function render(){
+  if(recoveryBlocked){document.getElementById('app').innerHTML=recoveryView();bind();return}
+  try{
   let html;
   switch(state.view){case'play':html=playView();break;case'phantom':html=phantomView();break;case'caddie':html=caddieView();break;case'stats':html=statsView();break;case'mates':html=matesView();break;case'profile':html=profileView();break;default:html=homeView()}
   document.getElementById('app').innerHTML=html+(modal||'');
   bind();
+  }catch(error){document.getElementById('app').innerHTML=shell('<section class="callout warning"><h2>Your data has been kept</h2><p>This screen could not open. Download a backup, then try reopening the app.</p><div class="btn-row"><button class="btn btn-primary" data-action="export-backup">Download backup</button><button class="btn btn-secondary" data-action="reload-app">Reopen app</button></div></section>','Recovery');bind();}
 }
 function bind(){
   document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>setView(b.dataset.nav));
   document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>setView(b.dataset.go));
-  document.querySelectorAll('[data-format]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-format]').forEach(x=>x.classList.remove('active'));b.classList.add('active')});
-  document.querySelectorAll('[data-player-select]').forEach(b=>b.onclick=()=>b.classList.toggle('active'));
+  document.querySelectorAll('[data-round-mode]').forEach(b=>b.onclick=()=>chooseMode(b.dataset.roundMode));
+  document.querySelectorAll('[data-edit-course]').forEach(b=>b.onclick=()=>newCourseModal(b.dataset.editCourse));
+  document.querySelectorAll('[data-par-score]').forEach(b=>b.onclick=()=>setParScore(b.dataset.parScore));
+  const courseSelect=document.getElementById('round-course');if(courseSelect)courseSelect.onchange=()=>{roundSetup.courseId=courseSelect.value;render()};
+  document.querySelectorAll('[data-format]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-format]').forEach(x=>x.classList.remove('active'));b.classList.add('active');roundSetup.format=b.dataset.format});
+  document.querySelectorAll('[data-player-select]').forEach(b=>b.onclick=()=>{b.classList.toggle('active');roundSetup.playerIds=[...document.querySelectorAll('[data-player-select].active')].map(x=>x.dataset.playerSelect)});
   document.querySelectorAll('[data-score]').forEach(b=>b.onclick=()=>changeScore(b.dataset.score,Number(b.dataset.delta)));
   document.querySelectorAll('[data-activate-course]').forEach(b=>b.onclick=()=>activateCourse(b.dataset.activateCourse));
   document.querySelectorAll('[data-phantom]').forEach(b=>b.onclick=()=>{state.activeRound.phantomRoundId=b.dataset.phantom;modal=null;save();render();toast('Phantom enabled')});
@@ -542,10 +669,13 @@ function bind(){
   document.querySelectorAll('[data-action]').forEach(b=>b.onclick=(e)=>{const a=b.dataset.action;actions[a]?.(e)});
 }
 const actions={
+  'export-backup':exportBackup,'restore-backup':restoreBackup,'export-recovery':exportRecovery,
+  'reload-app':()=>window.location.reload(),'retry-save':()=>{save();render()},
+  'apply-update':()=>{if(state.activeRound||!waitingWorker)return;if(!save())return toast('Save your data before applying an update');applyingUpdate=true;waitingWorker.postMessage({type:'SKIP_WAITING'})},
   'start-round':startRound,'prev-hole':prevHole,'next-hole':nextHole,'finish-round':finishRound,
-  'abandon-round':()=>{if(confirm('Abandon this round?')){state.activeRound=null;save();render()}},
+  'abandon-round':()=>{if(confirm('Abandon this round? Its scores will not appear in round history. Download a backup first if you want to keep them.')){const r=state.activeRound;state.activeRound=null;if(!save())state.activeRound=r;else stopGps();render()}},
   'gps':enableGps,'locate-course':locateCourse,'enable-phantom':enablePhantom,'round-caddie':roundCaddie,'save-hole-stats':saveHoleStats,
-  'close-modal':()=>{modal=null;render()},'new-course':newCourseModal,'save-course':saveCourse,'import-course':importCourse,
+  'close-modal':()=>{modal=null;render()},'new-course':()=>newCourseModal(),'save-course':saveCourse,'import-course':importCourse,
   'edit-players':editPlayersModal,'save-players':savePlayers,
   'new-group':()=>newGroupModal(),'save-group':saveGroup,'delete-group':deleteGroup,
   'new-open-round':newOpenRoundModal,'save-open-round':saveOpenRound,'save-open-statuses':saveOpenStatuses,'delete-open-round':deleteOpenRound,
@@ -556,29 +686,29 @@ const actions={
   'caddie-recommend':()=>{const d=Number(document.getElementById('caddie-distance').value||0);document.getElementById('caddie-result').innerHTML=caddieRecommendation(d)},
   'toggle-gpsplus':()=>{state.gpsPlus=!state.gpsPlus;save();render();toast(state.gpsPlus?'GPS+ demo enabled':'GPS+ demo disabled')},
   'share-native':shareNative,'save-share-card':saveShareCard,'copy-share-text':copyShareText,
-  'reset-app':()=>{if(confirm('Delete all ParLink V1.4 data on this device?')){localStorage.removeItem(APP_KEY);state=structuredClone(initialState);render();toast('ParLink V1.4 reset')}},
+'reset-app':()=>{if(confirm('Delete all ParLink data on this device, including the recovery copy? Download a backup first.')){try{for(const key of [APP_KEY,BACKUP_KEY,APP_KEY+'.damaged'])localStorage.removeItem(key)}catch{return toast('Could not clear storage. Your data has been kept.')}stopGps();state=structuredClone(initialState);storageStatus='new';recoveryNotice='';recoveryBlocked=false;render();toast('ParLink reset')}},
   'install':async()=>{if(window.__deferredPrompt){window.__deferredPrompt.prompt();await window.__deferredPrompt.userChoice;window.__deferredPrompt=null}else toast('Use your browser menu → Add to Home screen')}
 };
 
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.__deferredPrompt=e});
-// Service worker disabled in native Android wrapper; assets are bundled offline.
 render();
-
-// Register ParLink service worker for installed/PWA updates.
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    try {
-      const regs = await navigator.serviceWorker.getRegistrations();
-      for (const reg of regs) await reg.unregister();
-      if ('caches' in window) {
-        const keys = await caches.keys();
-        await Promise.all(keys.map(k => caches.delete(k)));
-      }
-    } catch (_) {}
+window.addEventListener('online',updateSaveStatus);
+window.addEventListener('offline',updateSaveStatus);
+if(typeof setInterval==='function')setInterval(refreshGpsDisplay,5000);
+// Cache only ParLink assets. Updates wait until the player explicitly applies them between rounds.
+if('serviceWorker' in navigator){
+  window.addEventListener('load',async()=>{
+    try{
+      const reg=await navigator.serviceWorker.register('/sw.js',{updateViaCache:'none'});
+      const waiting=()=>{if(reg.waiting){waitingWorker=reg.waiting;updateSaveStatus()}};
+      waiting();reg.addEventListener('updatefound',()=>{const worker=reg.installing;worker?.addEventListener('statechange',waiting)});
+      await navigator.serviceWorker.ready;offlineReady=true;updateSaveStatus();
+    }catch{offlineReady=false;updateSaveStatus()}
   });
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(applyingUpdate&&!state.activeRound)window.location.reload()});
 }
-
   </script>
 </body>
 </html>
+
 
